@@ -61,10 +61,10 @@ angular.module('mainCtrl', [])
 	vm.doLogout = function() {
 
 		Auth.logout();
+		vm.user = '';
 
 		//reset all user info
 
-		vm.users = {};
 
 		$location.path('/login');
 	};

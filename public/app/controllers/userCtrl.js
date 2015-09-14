@@ -1,6 +1,6 @@
 angular.module('userCtrl', ['userService'])
 
-.controller('userController', ["User", function(User) {
+.controller('userController', ["User", "Auth", function(User, Auth) {
 
 
 	var vm = this;
@@ -37,10 +37,13 @@ angular.module('userCtrl', ['userService'])
 
 	};
 
+
+
+
 }])
 
 
-.controller("userCreateController", ["User", function(User) {
+.controller("userCreateController", ["User", "$location", "$timeout", function(User, $location, $timeout) {
 
 	var vm = this;
 
@@ -73,7 +76,17 @@ angular.module('userCtrl', ['userService'])
 
 				vm.message = data.message;
 
+
+
 			});
+
+		$timeout(function(){
+            
+                   $location.path('/login')
+              
+            		}, 2000);
+
+		
 
 		};
 

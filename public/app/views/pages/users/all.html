@@ -21,22 +21,27 @@
 <table class="table table-bordered table-striped" ng-show="user.users"> 
 	<thead>
 		<tr>
-			<th>Player</th>
+			<th>Player </th>
 			<th>email</th> 
 			<th>Position</th>
-			<th class="col-sm-2"></th>
     	</tr>
   	</thead>
 <tbody>
 	 <!-- LOOP OVER THE USERS -->
 	<tr ng-repeat="person in user.users"> 
-		<td>{{ person.username }}</td>
+		<td>{{person.username}} &nbsp &nbsp &nbsp
+			<a ng-if = "person.username == main.user.username" ng-href="/users/{{ person._id }}">
+				<span class="glyphicon glyphicon-pencil"></span> 
+			</a>
+			<a ng-if = "person.username == main.user.username" 	href="#" ng-click="user.deleteUser(person._id)">
+				<span class="glyphicon glyphicon-trash"></span>
+			</a>
+
+		</td>
 		<td>{{ person.email }}</td>
 		<td>{{ person.position1 }}</td>
-		<td class="col-sm-2">
-			<a ng-href="/users/{{ person._id }}" class="btn btn-danger">Edit</a>
-			<a href="#" ng-click="user.deleteUser(person._id)" class="btn btn-primary">Delete</a>
-		</td> 
+		
+
 
 	</tr>
 

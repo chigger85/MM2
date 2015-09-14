@@ -12,6 +12,42 @@ module.exports = function(app, express) {
 
 	//route for authenticating users (POST http://localhost:8080/api/authenticate)
 
+		// on routes that end in /users
+	// ----------------------------------------------------
+	apiRouter.route('/users')
+
+		// create a user (accessed at POST http://localhost:8080/users)
+		.post(function(req, res) {
+			
+			var user = new User();		// create a new instance of the User model
+			user.firstname = req.body.firstname;  // set the users name (comes from the request)
+			user.secondname = req.body.secondname;  // set the users username (comes from the request)
+			user.username = req.body.username;  // set the users password (comes from the request)
+			user.password = req.body.password;
+			user.dob = req.body.dob;
+			user.position1 = req.body.position1;
+			user.position2 = req.body.position2;
+			user.address = req.body.address;
+			user.email = req.body.email;
+			user.mob = req.body.mob;  
+
+			user.save(function(err) {
+				//if (err) return res.send(err);
+				if (err) {
+					// duplicate entry
+					if (err.code == 11000) 
+						return res.json({ success: false, message: 'A user with that username already exists. '});
+					else 
+						return res.send(err);
+					}
+	 
+	 			// return a message
+	 			res.json({ message: 'User created!' });
+
+			});
+
+		})
+
 
 	apiRouter.post('/authenticate', function(req, res) {
 
@@ -126,40 +162,8 @@ module.exports = function(app, express) {
 	});
 
 
-	// on routes that end in /users
-	// ----------------------------------------------------
+
 	apiRouter.route('/users')
-
-		// create a user (accessed at POST http://localhost:8080/users)
-		.post(function(req, res) {
-			
-			var user = new User();		// create a new instance of the User model
-			user.firstname = req.body.firstname;  // set the users name (comes from the request)
-			user.secondname = req.body.secondname;  // set the users username (comes from the request)
-			user.username = req.body.username;  // set the users password (comes from the request)
-			user.password = req.body.password;
-			user.dob = req.body.dob;
-			user.position1 = req.body.position1;
-			user.position2 = req.body.position2;
-			user.address = req.body.address;
-			user.email = req.body.email;
-			user.mob = req.body.mob;  
-
-			user.save(function(err) {
-				//if (err) return res.send(err);
-				if (err) {
-					// duplicate entry
-					if (err.code == 11000) 
-						return res.json({ success: false, message: 'A user with that username already exists. '});
-					else 
-						return res.send(err);
-					}
-	 
-	 			// return a message
-	 			res.json({ message: 'User created!' });
-			});
-
-		})
 
 		// get all the users (accessed at GET http://localhost:8080/api/users)
 		.get(function(req, res) {
@@ -224,6 +228,12 @@ module.exports = function(app, express) {
 				res.json({ message: 'Successfully deleted' });
 			});
 		});
+
+
+		// api endpoint to get user information
+	apiRouter.get('/me', function(req, res) {
+		res.send(req.decoded);
+	});
 
 
 		return apiRouter;

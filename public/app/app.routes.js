@@ -35,6 +35,7 @@ angular.module('app.routes', ['ngRoute'])
 	})
 
 
+
 		//pagetoeditauser
 	.when('/users/:user_id', {
 	  templateUrl: 'app/views/pages/users/single.html',

@@ -32,6 +32,21 @@ angular.module('authService', [])
 			});
 		};
 
+	authFactory.createLogin = function(username, password) {
+
+		// return the promise object and its data
+		return $http.post('/api/authenticate', { 
+			username: username,
+			password: password
+		})
+			.success(function(data) {
+
+			    AuthToken.setToken(data.token);
+				return data; 
+
+			});
+		};
+
 
 	// log a user out by clearing the token
 	authFactory.logout = function() { 
@@ -60,7 +75,7 @@ angular.module('authService', [])
 
 	authFactory.getUser = function() { 
 		if (AuthToken.getToken())
-			return $http.get('/api/me', {cache: true }); 
+			return $http.get('/api/me'); 
 		else
 			return $q.reject({ message: 'User has no token.' }); 
 
