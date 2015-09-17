@@ -41,6 +41,29 @@ angular.module('app.routes', ['ngRoute'])
 	  templateUrl: 'app/views/pages/users/single.html',
 	  controller: 'userEditController',
 	  controllerAs: 'user'
+	})
+
+		//pagetoview fixtures
+	.when('/availability', {
+	  templateUrl: 'app/views/pages/users/availability.html',
+	  controller: 'fixtureController',
+	  controllerAs: 'fixture'
+	})
+
+
+			//page to create fixtures
+	.when('/availability/create', {
+	  templateUrl: 'app/views/pages/users/createFixture.html',
+	  controller: 'fixtureCreateController',
+	  controllerAs: 'fixture'
+	})
+
+
+				//page to editfixtures
+	.when('/availability/:fixture_id', {
+	  templateUrl: 'app/views/pages/users/fixture.html',
+	  controller: 'fixtureEditController',
+	  controllerAs: 'fixture'
 	});
 
 

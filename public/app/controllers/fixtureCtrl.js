@@ -1,49 +1,44 @@
-angular.module('userCtrl', ['userService'])
+angular.module('fixtureCtrl', ['fixtureService']) 	
 
-.controller('userController', ["User", "Auth", function(User, Auth) {
-
+.controller('fixtureController', ["Fixture", function(Fixture) {
 
 	var vm = this;
-   
 
-    // set a processing variable to show loading things
+	    // set a processing variable to show loading things
 	vm.processing = true;
-  // grab all the users at page load
-	User.all().success(function(data) {
-      // when all the users come back, remove the processing variable
+
+	// grab all the fixtures at page load
+	Fixture.all().success(function(data) {
+      // when all the fixtures come back, remove the processing variable
 		vm.processing = false;
-      // bind the users that come back to vm.users
-     vm.users = data;
+      // bind the fixtures that come back to vm.fixtures
+     	vm.fixtures = data;
 
     });
 
 
-
-    // function to delete a user
-	vm.deleteUser = function(id) { 
+        // function to delete a user
+	vm.deleteFixture = function(id) { 
 
 		vm.processing = true;
 	  	// accepts the user id as a parameter
-		User.delete(id).success(function(data) {
+		Fixture.delete(id).success(function(data) {
 		// get all users to update the table
 		// you can also set up your api
 		// to return the list of users with the delete call 
-			User.all().success(function(data) { 
+			Fixture.all().success(function(data) { 
 
 				vm.processing = false; 
-				vm.users = data;
+				vm.fixtures = data;
 			});
 		}); 
 
 	};
 
-
-
-
 }])
 
 
-.controller("userCreateController", ["User", "$location", "$timeout", function(User, $location, $timeout) {
+.controller("fixtureCreateController", ["Fixture", "$location", "$timeout", function(Fixture, $location, $timeout) {
 
 	var vm = this;
 
@@ -54,7 +49,7 @@ angular.module('userCtrl', ['userService'])
 
 	// function to create user
 
-	vm.saveUser = function() {
+	vm.saveFixture = function() {
 
 		vm.processing = true;
 
@@ -65,14 +60,14 @@ angular.module('userCtrl', ['userService'])
 
 		// use the userCreate function in the user Service
 
-		User.create(vm.userData)
+		Fixture.create(vm.fixtureData)
 			.success(function(data) {
 
 				vm.processing = false;
 
 				// clear the form
 
-				vm.userData = {};
+				vm.fixtureData = {};
 
 				vm.message = data.message;
 
@@ -82,17 +77,18 @@ angular.module('userCtrl', ['userService'])
 
 		$timeout(function(){
             
-                   $location.path('/login')
+                   $location.path('/availability')
               
             		}, 2000);
 
 		
 
-		};
+		};		
 
 }])
 
-.controller("userEditController", ["User", "$routeParams", function(User, $routeParams) {
+
+.controller("fixtureEditController", ["Fixture", "$routeParams", function(Fixture, $routeParams) {
 
 	var vm = this;
 
@@ -109,19 +105,19 @@ angular.module('userCtrl', ['userService'])
 	// get the user data for the user you want to edit 
 	// $routeParams is the way we grab data from the URL
 
-	User.get($routeParams.user_id)
+	Fixture.get($routeParams.fixture_id)
 		.success(function(data) {
 
-			vm.userData = data;
+			vm.fixtureData = data;
 
-			vm.userData.dob = new Date(vm.userData.dob);  //need to instantiate dob as date object
+			vm.fixtureData.date = new Date(vm.fixtureData.date);  //need to re-instantiate dob as date object
 
 		});
 
 	//function to save user
 
 
-	vm.saveUser =  function() {
+	vm.saveFixture =  function() {
 
 		vm.processing = true;
 
@@ -130,7 +126,7 @@ angular.module('userCtrl', ['userService'])
 
 		// call the userService function to update
 
-		User.update($routeParams.user_id, vm.userData)
+		Fixture.update($routeParams.fixture_id, vm.fixtureData)
 
 			.success(function(data) {
 
@@ -139,7 +135,7 @@ angular.module('userCtrl', ['userService'])
 
 				//clear the form
 
-				vm.userData = {};
+				vm.fixtureData = {};
 
 				//bind the message from our API to vm.message
 
@@ -150,4 +146,7 @@ angular.module('userCtrl', ['userService'])
 		}
 
 }])
+
+
+
 

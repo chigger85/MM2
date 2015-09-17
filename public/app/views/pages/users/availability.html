@@ -1,0 +1,58 @@
+<div class="page-header">
+ <h2>
+	Fixture List &nbsp &nbsp &nbsp
+	<a href="/fixtures/create" class="btn btn-default"> 
+		<span class="glyphicon glyphicon-plus"></span>
+		
+	</a> 
+</h2>
+</div>
+
+
+<div class="jumbotron text-center" ng-show="fixture.processing"> 
+	<span class="glyphicon glyphicon-repeat spinner"></span> 
+		<p>Loading Fixtures...</p>
+</div>
+
+
+<table class="table table-bordered table-striped" ng-show="fixture.fixtures"> 
+	<thead>
+		<tr>
+			<th> Date </th> 
+			<th>Opposition</th>
+			<th> H/A </th>
+			<th> Venue </th>
+			<th> Competition </th>
+			<th> </th>
+
+    	</tr>
+  	</thead>
+<tbody>
+	 <!-- LOOP OVER THE fixtures -->
+	<tr ng-repeat="detail in fixture.fixtures"> 
+		<td> {{detail.date | date: 'longDate'}}
+			<!-- <a ng-if = "person.username == main.user.username" ng-href="/users/{{ person._id }}">
+				<span class="glyphicon glyphicon-pencil"></span> 
+			</a>
+			<a ng-if = "person.username == main.user.username" 	href="#" ng-click="user.deleteUser(person._id)">
+				<span class="glyphicon glyphicon-trash"></span>
+			</a> -->
+		</td>
+		<td>{{detail.opposition}}</td>
+		<td> 
+			<div ng-if = "detail.home == true"> H </div>
+			<div ng-if = "detail.home == false"> A </div>
+		</td>
+		<td>{{ detail.venue }}</td>
+		<td>{{ detail.comp}}</td>
+		<td> <a href="/availability/{{detail._id }}" class="btn btn-default"> Go To </a> </td>
+		
+
+
+	</tr>
+
+  </tbody>
+</table>
+
+
+

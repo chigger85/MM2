@@ -16,6 +16,7 @@ var UserSchema   = new Schema({
 	mob: String
 });
 
+
 // hash the password before the user is saved
 UserSchema.pre('save', function(next) {
 	var user = this;

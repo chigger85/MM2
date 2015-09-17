@@ -1,4 +1,6 @@
 var User = require('../models/user');
+var Fixture = require('../models/fixture')
+var Goal = require('../models/goal')
 var jwt = require('jsonwebtoken');
 var config = require('../../config');
 
@@ -236,14 +238,232 @@ module.exports = function(app, express) {
 	});
 
 
-		return apiRouter;
 
-};
-
+// -------------------------- fixture api calls -------------------------
 
 
+
+	apiRouter.route('/fixtures')
+
+	// get all the fixtures (accessed at GET http://localhost:8080/api/fixtures)
+
+		.get(function(req, res) {
+			Fixture.find(function(err, fixtures) {
+				if (err) return res.send(err);
+
+				// return the users
+				res.json(fixtures);
+			});
+		})
+
+
+
+		// create a user (accessed at POST http://localhost:8080/fixtures)
+		.post(function(req, res) {
+			
+			var fixture = new Fixture();	
+			fixture.opposition = req.body.opposition; 
+			fixture.date = req.body.date; 
+			fixture.home = req.body.home;
+			fixture.venue = req.body.venue; 
+			fixture.date = req.body.date;  
+			fixture.ko = req.body.ko;	
+			fixture.comp = req.body.comp;
+			fixture.available = req.body.available; //available is an array of player ids
+			fixture.paid = req.body.paid; // list of player ids who paid
+			fixture.matchStats.homeGoals = req.body.homeGoals;
+			fixture.matchStats.awayGoals = req.body.awayGoals;
+			fixture.matchStats.goal= req.body.goal;
+			fixture.matchStats.yellow = req.body.yellow;
+			fixture.matchStats.red = req.body.red;
+			fixture.matchStats.motm = req.body.motm;
+			fixture.matchStats.starter = req.body.starter;
+			fixture.matchStats.subs = req.body.subs;
+
+			fixture.save(function(err) {
+				//if (err) return res.send(err);
+				if (err) {
+					// duplicate entry
+					if (err.code == 11000) 
+						return res.json({ success: false, message: 'A fixture with that date already exists. '});
+					else 
+						return res.send(err);
+					}
+	 
+	 			// return a message
+	 			res.json({ message: 'fixture created!' });
+
+		
+
+			});
+
+		});
+
+
+	apiRouter.route('/fixtures/:fixture_id')
 	
 
 
+		// delete the fixture with this id
+		.delete(function(req, res) {
+			Fixture.remove({
+				_id: req.params.fixture_id
+			}, function(err, fixture) {
+				if (err) return res.send(err);
 
+				res.json({ message: 'Successfully deleted' });
+			});
+		})
+
+
+
+		// get the fixture with that id
+		.get(function(req, res) {
+			Fixture.findById(req.params.fixture_id, function(err, fixture) {
+				if (err) return res.send(err);
+
+				// return that fixture
+				res.json(fixture);
+			});
+		})
+
+		.put(function(req, res) {
+
+			Fixture.findById(req.params.fixture_id, function(err, fixture) {
+
+				if (err) return res.send(err);
+
+				// set the new user information if it exists in the request
+				if (req.body.opposition) fixture.opposition = req.body.opposition;
+				if (req.body.venue) fixture.venue = req.body.venue
+				if (req.body.date) fixture.date = req.body.date;
+				if (req.body.home) fixture.home = req.body.home;
+				if (req.body.ko) fixture.ko = req.body.ko;
+				if (req.body.available) fixture.available = req.body.available;
+				if (req.body.comp) fixture.comp = req.body.comp;
+				if (req.body.paid) fixture.paid = req.body.paid;
+				if (req.body.homeGoals) fixture.matchStats.homeGoals = req.body.homeGoals;
+				if (req.body.awayGoals) fixture.matchStats.awayGoals = req.body.awayGoals;
+				if (req.body.homeGoals) fixture.matchStats.homeGoals = req.body.homeGoals;
+				if (req.body.goal) fixture.matchStats.goal = req.body.goal;
+				if (req.body.yellow) fixture.matchStats.yellow = req.body.yellow;
+				if (req.body.red) fixture.matchStats.red = req.body.red;
+				if (req.body.motm) fixture.matchStats.motm = req.body.motm;
+				if (req.body.starter) fixture.matchStats.starter = req.body.starter;
+				if (req.body.subs) fixture.matchStats.subs = req.body.subs;
+				
+				// save the fixture
+				fixture.save(function(err) {
+					if (err) return res.send(err);
+
+					// return a message
+					res.json({ message: 'Fixture updated!' });
+				});
+
+			});
+		});
+	
+
+// -----------------Goal API calls ---------------------
+	
+
+	apiRouter.route('/goals')
+
+
+	// create a goal (accessed at POST http://localhost:8080/goals)
+		.post(function(req, res) {
+			var goal = new Goal();
+			goal.scorer = req.body.scorer;
+			goal.mins = req.body.mins;
+			goal.assist = req.body.assist;
+			goal.fixture = req.body.fixture;
+
+			goal.save(function(err) {
+				//if (err) return res.send(err);
+				if (err) {
+
+						return res.send(err);
+					}
+	 
+	 			// return a message
+	 			res.json({ message: 'Goal Saved' });
+
+		
+
+			});
+
+
+		})
+
+
+	// get all the goals (accessed at GET http://localhost:8080/api/goals)
+
+		.get(function(req, res) {
+			Goal.find(function(err, goals) {
+				if (err) return res.send(err);
+
+				// return the users
+				res.json(goals);
+			});
+		})
+
+
+
+
+	apiRouter.route('goals/:goal_id')
+
+
+	// get a specific goal
+
+		.get(function(req, res) {
+			Goal.findById(req.params.goal_id, function(err, goal) {
+				if (err) return res.send(err);
+
+				// return that goal
+				res.json(goal);
+			});
+		})
+
+
+	// delete the goal with this id
+		.delete(function(req, res) {
+			Goal.remove({
+				_id: req.params.goal_id
+			}, function(err, goal) {
+				if (err) return res.send(err);
+
+				res.json({ message: 'Successfully deleted' });
+			});
+		})
+
+
+	// edit the goal with this idea
+
+		.put(function(req,res) {
+
+			Goal.findById(req.params.goal_id, function(err, goal) {
+
+				if (err) return res.send(err);
+
+				if (req.body.scorer) goal.scorer = req.body.scorer;
+				if (req.body.mins) goal.mins = req.body.mins;
+				if (req.body.assist) goal.assist = req.body.assist;
+				if (req.body.fixture) goal.fixture = req.body.fixture;
+
+				// save the fixture
+				fixture.save(function(err) {
+					if (err) return res.send(err);
+
+					// return a message
+					res.json({ message: 'goal updated!' });
+				});
+			})
+
+		});
+
+
+
+	return apiRouter
+
+	}
 
