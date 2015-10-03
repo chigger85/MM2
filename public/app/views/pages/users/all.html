@@ -1,11 +1,11 @@
 <div class="page-header">
- <h1>
-	Users
+ <h2>
+	Players
 	<a href="/users/create" class="btn btn-default"> 
 		<span class="glyphicon glyphicon-plus"></span>
-		 New User
+
 	</a> 
-</h1>
+</h2>
 
 
 </div>
@@ -31,7 +31,7 @@
 	<tr ng-repeat="person in user.users"> 
 		<td>{{person.username}} &nbsp &nbsp &nbsp
 			<a ng-if = "person.username == main.user.username" ng-href="/users/{{ person._id }}">
-				<span class="glyphicon glyphicon-pencil"></span> 
+				<span class="glyphicon glyphicon-pencil">&nbsp </span> 
 			</a>
 			<a ng-if = "person.username == main.user.username" 	href="#" ng-click="user.deleteUser(person._id)">
 				<span class="glyphicon glyphicon-trash"></span>
@@ -47,3 +47,5 @@
 
   </tbody>
 </table>
+
+<p> {{main.user.position1}} </p>

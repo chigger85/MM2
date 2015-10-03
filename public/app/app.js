@@ -7,6 +7,7 @@ angular.module('userApp', [
   'fixtureCtrl',
   'userService',
   'fixtureService',
+  'fixtureAttendService',
   'goalService'
 ])
 

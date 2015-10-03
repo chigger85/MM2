@@ -13,7 +13,7 @@ angular.module('userCtrl', ['userService'])
       // when all the users come back, remove the processing variable
 		vm.processing = false;
       // bind the users that come back to vm.users
-     vm.users = data;
+     vm.users = data
 
     });
 
@@ -92,7 +92,7 @@ angular.module('userCtrl', ['userService'])
 
 }])
 
-.controller("userEditController", ["User", "$routeParams", function(User, $routeParams) {
+.controller("userEditController", ["User", "$routeParams","$location", "$timeout", function(User, $routeParams, $location, $timeout) {
 
 	var vm = this;
 
@@ -145,9 +145,22 @@ angular.module('userCtrl', ['userService'])
 
 				vm.message = data.message;
 
+
+				
+
 			});
 
-		}
+			$timeout(function(){
+            
+                $location.path('/users')
+              
+            	}, 1000);
+
+		
+
+		};
 
 }])
+
+
 

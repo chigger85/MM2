@@ -45,7 +45,7 @@ angular.module('app.routes', ['ngRoute'])
 
 		//pagetoview fixtures
 	.when('/availability', {
-	  templateUrl: 'app/views/pages/users/availability.html',
+	  templateUrl: 'app/views/pages/users/availability2.html',
 	  controller: 'fixtureController',
 	  controllerAs: 'fixture'
 	})

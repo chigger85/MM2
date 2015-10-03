@@ -1,6 +1,6 @@
-angular.module('fixtureService', [])
+angular.module('fixtureService', ['userService'])
 
-.factory('Fixture', ["$http", function($http) {
+.factory('Fixture', ["$http", function($http, User) {
 
 	// create fixture object
 
@@ -40,6 +40,17 @@ angular.module('fixtureService', [])
 
 		return $http.delete('/api/fixtures/' + id);
 	};
+
+	
+	fixtureFactory.attending = function(fixture_id) {
+
+
+		return $http.get('/api/fixtures/' + fixture_id);
+
+
+
+	};
+
 
 	// return our entire fixtureFactory object
 	return fixtureFactory;

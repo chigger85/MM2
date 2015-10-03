@@ -57,7 +57,7 @@ module.exports = function(app, express) {
 			// select the name username and password explicitly
 			User.findOne({
 				username: req.body.username
-			   }).select('firstname username password').exec(function(err, user) {
+			   }).select('firstname username password _id').exec(function(err, user) {
 
 			   	if (err) throw err;
 
@@ -87,8 +87,10 @@ module.exports = function(app, express) {
 
 				 	 var token = jwt.sign({
 
-				 	 	name: user.firstname,
-				 	 	username: user.username
+				 	 	username: user.username,
+				 	 	id: user._id,
+
+				 	 	
 
 				 	 }, superSecret, {
 
@@ -235,7 +237,17 @@ module.exports = function(app, express) {
 		// api endpoint to get user information
 	apiRouter.get('/me', function(req, res) {
 		res.send(req.decoded);
+		console.log(req.decoded.id);
+		my_id = req.decoded.id;
+
+
 	});
+
+	
+
+	
+
+
 
 
 
@@ -362,6 +374,69 @@ module.exports = function(app, express) {
 
 			});
 		});
+
+
+
+	
+	apiRouter.route('/fixtures/:fixture_id/availability')
+
+
+
+	// get the availibility for fixture with that id
+		.get(function(req, res) {
+			Fixture.findById(req.params.fixture_id, function(err, fixture) {
+				if (err) return res.send(err);
+
+				// return that fixture
+				res.json(fixture.available);
+			});
+		})
+
+
+
+
+	apiRouter.route('/fixtures/:fixture_id/yes')
+
+		//add availability to the fixture
+
+
+		.put(function(req, res) {
+
+			console.log("prick");
+			Fixture.findByIdAndUpdate(req.params.fixture_id, {$push: {"available": my_id}},  function(err, fixture) {
+				if (err) return res.send(err);
+
+				// return that fixture
+				res.json({message: "You are available"});
+				
+
+			});
+		});
+
+
+
+	apiRouter.route('/fixtures/:fixture_id/no')
+
+		//remove availability of fixture
+
+		.put(function(req, res) {
+			console.log("prick");
+			Fixture.findByIdAndUpdate(req.params.fixture_id, {$pull: {"available": my_id}},  function(err, fixture) {
+				if (err) return res.send(err);
+
+				// return that fixture
+				res.json({message: "You are not available"});
+				
+			});
+		});
+
+
+
+
+
+
+
+
 	
 
 // -----------------Goal API calls ---------------------

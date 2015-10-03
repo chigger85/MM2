@@ -1,6 +1,6 @@
-angular.module('fixtureCtrl', ['fixtureService']) 	
+angular.module('fixtureCtrl', ['fixtureService', 'userService', 'authService', 'fixtureAttendService']) 	
 
-.controller('fixtureController', ["Fixture", function(Fixture) {
+.controller('fixtureController', ["Fixture", "FixtureAttend", "Auth", "$location", "$route", function(Fixture,  FixtureAttend, Auth, $location, $route) {
 
 	var vm = this;
 
@@ -15,6 +15,17 @@ angular.module('fixtureCtrl', ['fixtureService'])
      	vm.fixtures = data;
 
     });
+
+   Auth.getUser().then(function (data) {
+
+     		vm.user = data.data
+
+	});
+
+
+
+
+    
 
 
         // function to delete a user
@@ -33,7 +44,70 @@ angular.module('fixtureCtrl', ['fixtureService'])
 			});
 		}); 
 
+
+
+	};	
+
+
+	vm.getAttend = function(id) {
+
+		FixtureAttend.getAttendance(id).success(function(data) {
+
+			vm.attData = data;
+			console.log(vm.attData);
+		})
+	}
+
+	
+
+	vm.removeAttend = function(id) {
+
+		 FixtureAttend.removeAttendance(id).success(function(data) {
+
+		 	vm.message = data.message;
+		 	console.log(data.message);
+
+		 	FixtureAttend.getAttendance(id).success(function(data) {
+
+		 		vm.attData = data;
+		 		console.log(data);
+		 		console.log(vm.user);
+
+
+		 	});
+
+		 
+		});
+
+		 $route.reload();
+
+
 	};
+
+
+
+	vm.addAttend = function(id) {
+
+		 FixtureAttend.addAttendance(id).success(function(data) {
+
+		 	vm.message = data.message;
+		 	console.log(data.message);
+
+		 	FixtureAttend.getAttendance(id).success(function(data) {
+
+		 		vm.attData = data;
+		 		console.log(data);
+		 		console.log(vm.user);	
+		 	});
+
+
+		 });
+
+		 $route.reload();
+
+
+	};
+
 
 }])
 
@@ -124,7 +198,7 @@ angular.module('fixtureCtrl', ['fixtureService'])
 		vm.message = '';
 
 
-		// call the userService function to update
+		// call the fixtureService function to update
 
 		Fixture.update($routeParams.fixture_id, vm.fixtureData)
 
@@ -146,6 +220,8 @@ angular.module('fixtureCtrl', ['fixtureService'])
 		}
 
 }])
+
+
 
 
 

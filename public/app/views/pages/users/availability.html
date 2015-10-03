@@ -1,6 +1,6 @@
 <div class="page-header">
  <h2>
-	Fixture List &nbsp &nbsp &nbsp
+	Fixtures
 	<a href="/fixtures/create" class="btn btn-default"> 
 		<span class="glyphicon glyphicon-plus"></span>
 		
@@ -14,45 +14,60 @@
 		<p>Loading Fixtures...</p>
 </div>
 
-
-<table class="table table-bordered table-striped" ng-show="fixture.fixtures"> 
-	<thead>
-		<tr>
-			<th> Date </th> 
-			<th>Opposition</th>
-			<th> H/A </th>
-			<th> Venue </th>
-			<th> Competition </th>
-			<th> </th>
-
-    	</tr>
-  	</thead>
-<tbody>
-	 <!-- LOOP OVER THE fixtures -->
-	<tr ng-repeat="detail in fixture.fixtures"> 
-		<td> {{detail.date | date: 'longDate'}}
-			<!-- <a ng-if = "person.username == main.user.username" ng-href="/users/{{ person._id }}">
-				<span class="glyphicon glyphicon-pencil"></span> 
-			</a>
-			<a ng-if = "person.username == main.user.username" 	href="#" ng-click="user.deleteUser(person._id)">
-				<span class="glyphicon glyphicon-trash"></span>
-			</a> -->
-		</td>
-		<td>{{detail.opposition}}</td>
-		<td> 
-			<div ng-if = "detail.home == true"> H </div>
-			<div ng-if = "detail.home == false"> A </div>
-		</td>
-		<td>{{ detail.venue }}</td>
-		<td>{{ detail.comp}}</td>
-		<td> <a href="/availability/{{detail._id }}" class="btn btn-default"> Go To </a> </td>
-		
+<div class = "jumbotron text-center">
 
 
-	</tr>
+	<table class="table table-bordered table-striped" ng-show="fixture.fixtures"> 
+		<thead>
+			<tr>
+				<th> Date </th> 
+				<th>Opposition</th>
+				<th> H/A </th>
+				<th> Venue </th>
+				<th> Competition </th>
+				<th> Attending?</th>
 
-  </tbody>
-</table>
+	    	</tr>
+	  	</thead>
+	<tbody>
+		 <!-- LOOP OVER THE fixtures -->
+		<tr ng-repeat="detail in fixture.fixtures"> 
+			<td> {{detail.date | date: 'longDate'}}
+				
+			</td>
+			<td>{{detail.opposition}}</td>
+			<td> 
+				<div ng-if = "detail.home == true"> H </div>
+				<div ng-if = "detail.home == false"> A </div>
+			</td>
+			<td>{{ detail.venue }}</td>
+			<td>{{ detail.comp}}</td>
+			<td align = "center">
+
+				<div ng-if = "detail.available.indexOf(main.user.id) >-1" class="no glyphicon glyphicon-thumbs-up">
+                    <a href="/availability/{{detail._id}}" class="btn btn-sm"></a>
+					
+				</div>
+
+					<div ng-if = "detail.available.indexOf(main.user.id) ==-1" class="no glyphicon glyphicon-thumbs-down">
+                        <a href="/availability/{{detail._id}}" class="btn btn-sm"></a>
+					
+				</div>
+
+			
+			</td>	
+			
+
+		</tr>
+
+
+
+	  </tbody>
+	</table>
+</div>
+
+
+
 
 
 
