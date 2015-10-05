@@ -19,7 +19,8 @@ angular.module('mainCtrl', [])
 
 		Auth.getUser().then(function (data) {
 
-     		vm.user = data.data
+     		vm.user = data.data;
+     		console.log(vm.user);
 
 		});
 	})

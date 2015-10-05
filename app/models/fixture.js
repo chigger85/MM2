@@ -8,7 +8,7 @@ var FixtureSchema = new Schema({
 	opposition: String,
 	venue: String,
 	date: {type: Date, default: Date.now, index: { unique: true }},
-	home: {type: Boolean},
+	home: {type: Boolean}, 
 	ko: String,
 	comp: String,
 	available: [{type: Schema.Types.ObjectId, ref: 'User' }],
@@ -28,8 +28,11 @@ var FixtureSchema = new Schema({
 	
 	},
 
+	status: String,
 	paid:[{type: Schema.Types.ObjectId, ref: 'User' }],
+	kit: {type: Schema.Types.ObjectId, ref: 'User' },
 
 });
+
 
 module.exports = mongoose.model('Fixture', FixtureSchema);

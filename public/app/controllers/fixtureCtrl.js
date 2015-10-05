@@ -153,7 +153,7 @@ angular.module('fixtureCtrl', ['fixtureService', 'userService', 'authService', '
             
                    $location.path('/availability')
               
-            		}, 2000);
+            		}, 1000);
 
 		
 

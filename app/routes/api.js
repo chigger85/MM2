@@ -32,6 +32,7 @@ module.exports = function(app, express) {
 			user.address = req.body.address;
 			user.email = req.body.email;
 			user.mob = req.body.mob;  
+			user.userType = req.body.userType;
 
 			user.save(function(err) {
 				//if (err) return res.send(err);
@@ -57,7 +58,7 @@ module.exports = function(app, express) {
 			// select the name username and password explicitly
 			User.findOne({
 				username: req.body.username
-			   }).select('firstname username password _id').exec(function(err, user) {
+			   }).select('firstname username password _id userType').exec(function(err, user) {
 
 			   	if (err) throw err;
 
@@ -87,8 +88,12 @@ module.exports = function(app, express) {
 
 				 	 var token = jwt.sign({
 
+				 	 	userType: user.userType,
 				 	 	username: user.username,
 				 	 	id: user._id,
+				 	 	
+
+				 	 
 
 				 	 	
 
@@ -210,6 +215,7 @@ module.exports = function(app, express) {
 				if (req.body.address) user.address = req.body.address;
 				if (req.body.email) user.email = req.body.email;
 				if (req.body.mob) user.mob = req.body.mob;  
+				if (req.body.userType) user.userType = req.body.userType;  
 
 				// save the user
 				user.save(function(err) {
@@ -237,8 +243,10 @@ module.exports = function(app, express) {
 		// api endpoint to get user information
 	apiRouter.get('/me', function(req, res) {
 		res.send(req.decoded);
-		console.log(req.decoded.id);
+		console.log(req.decoded);
 		my_id = req.decoded.id;
+		console.log(req.decoded.userType)
+		
 
 
 	});
@@ -402,7 +410,6 @@ module.exports = function(app, express) {
 
 		.put(function(req, res) {
 
-			console.log("prick");
 			Fixture.findByIdAndUpdate(req.params.fixture_id, {$push: {"available": my_id}},  function(err, fixture) {
 				if (err) return res.send(err);
 
@@ -420,7 +427,7 @@ module.exports = function(app, express) {
 		//remove availability of fixture
 
 		.put(function(req, res) {
-			console.log("prick");
+
 			Fixture.findByIdAndUpdate(req.params.fixture_id, {$pull: {"available": my_id}},  function(err, fixture) {
 				if (err) return res.send(err);
 

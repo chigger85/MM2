@@ -44,16 +44,17 @@
 			<td>{{ detail.comp}}</td>
 			<td align = "center">
 
-				<div ng-if = "detail.available.indexOf(main.user.id) >-1" class="no glyphicon glyphicon-thumbs-up">
-                    <a href="/availability/{{detail._id}}" class="btn btn-sm"></a>
-					
+				<div ng-if = "detail.available.indexOf(main.user.id) >-1">
+					<span class="yes glyphicon glyphicon-thumbs-up"> </span>
 				</div>
 
-					<div ng-if = "detail.available.indexOf(main.user.id) ==-1" class="no glyphicon glyphicon-thumbs-down">
-                        <a href="/availability/{{detail._id}}" class="btn btn-sm"></a>
-					
+					<div ng-if = "detail.available.indexOf(main.user.id) ==-1">
+					<span class="no glyphicon glyphicon-thumbs-down"> </span>
 				</div>
 
+				<div>
+					<a href="/availability/{{detail._id}}" class="btn btn-sm"> view </a>
+				</div>
 			
 			</td>	
 			

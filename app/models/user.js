@@ -13,7 +13,8 @@ var UserSchema   = new Schema({
 	position2: String,
 	address: String,
 	email: String,
-	mob: String
+	mob: String,
+	userType: String
 });
 
 

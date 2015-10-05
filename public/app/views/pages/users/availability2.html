@@ -1,7 +1,7 @@
 <div class="page-header">
  <h2>
 	Fixtures
-	<a href="/fixtures/create" class="btn btn-default"> 
+	<a ng-if = "main.user.userType == 'admin'" href="/availability/create" class="btn btn-default"> 
 		<span class="glyphicon glyphicon-plus"></span>
 		
 	</a> 
@@ -12,6 +12,7 @@
 <div class = "jumbotron text-center" ng-show = "fixture.processing">
     <span class="glyphicon glyphicon-repeat spinner"></span> 
         <p>Loading Fixtures...</p>
+       
 </div>
 
 <div class="container">
@@ -31,6 +32,7 @@
                         <th><input type="text" class="form-control" placeholder="Venue" disabled></th>
                         <th><input type="text" class="form-control" placeholder="Competition" disabled></th>
                         <th><input type="text" class="form-control" placeholder="Attending?" disabled></th>
+                        <th ng-if = "main.user.userType == 'admin'"> <input type="text" class="form-control" placeholder="Admin" disabled> </th>
                     </tr>
                 </thead>
                 <tbody>
@@ -44,7 +46,7 @@
                         </td>
                         <td>{{ detail.venue }}</td>
                         <td>{{ detail.comp}}</td>
-                        <td align = "center">
+                        <td>
 
                             <div ng-if = "detail.available.indexOf(main.user.id) >-1" class="yes glyphicon glyphicon-thumbs-up">
                                 <a href="" class="btn btn-sm" ng-click = "fixture.removeAttend(detail._id)"> change </a>
@@ -55,8 +57,19 @@
                                 <a href="" class="btn btn-sm" ng-click = "fixture.addAttend(detail._id)"> change </a>
                             </div>
                         
-                        </td>   
+                        </td> 
+                       <td>
+                            <a ng-if = "main.user.userType == 'admin'" ng-href="/availability/{{ detail._id }}">
+                                <span class="glyphicon glyphicon-pencil">&nbsp </span> 
+                            </a>
+                            <a ng-if = "main.user.userType == 'admin'"  href="#" ng-click="fixture.deleteFixture(detail._id)">
+                                <span class="glyphicon glyphicon-trash"></span>
+                            </a>
+                    </td>
+
                      </tr>
+
+
                  </tbody> 
             </table>
         </div>

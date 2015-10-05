@@ -13,3 +13,4 @@ var GoalSchema = new Schema({
 
 
 module.exports = mongoose.model('Goal', GoalSchema);
+

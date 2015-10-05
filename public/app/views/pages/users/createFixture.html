@@ -1,7 +1,106 @@
 <div class="page-header">
- <h1>
-	Create Fixture Page
-</h1>
-
-
+	<h3 ng-if="fixture.type == 'create'">Create Fixture</h3> 
+	<h3 ng-if="fixture.type == 'edit'">Edit Fixture</h3>
 </div>
+
+<div class="jumbotron">
+<form class="form-horizontal" ng-submit="fixture.saveFixture()">
+	
+	 <table class="table">
+        <thead>
+            <tr>
+                <th> <h3> Fixture Details </h3> </th>   
+            </tr>
+        </thead>
+
+        <tbody>
+
+        	<tr>
+        		<td>
+        			<div class="form-group">
+						<label class="col-sm-4 control-label"> Date </label> 
+						<div class="col-sm-8">
+							<input required = 'true' type="date" class="form-control" ng-model="fixture.fixtureData.date">
+   						</div>
+  					</div>
+        		</td>
+        		<td>
+        			<div class="form-group">
+						<label class="col-sm-4 control-label">Opposition</label> 
+						<div class="col-sm-8">
+							<input required = 'true'  type="text" class="form-control" ng-model="fixture.fixtureData.opposition">
+   						</div>
+  					</div>
+  				</td>
+        	</tr>
+
+        	<tr>
+
+  				<td>
+        			<div class="form-group">
+						<label class="col-sm-4 control-label">H/W</label> 
+						<div class="col-sm-8">
+							<select required = 'true'  type="text" ng-model="fixture.fixtureData.home">
+								<option value = "home"> Home </option>
+								<option value = "away"> Away </option>
+							</select>
+   						</div>
+  					</div>
+  				</td>
+
+  				<td>
+        			<div class="form-group">
+						<label class="col-sm-4 control-label">venue</label> 
+						<div class="col-sm-8">
+							<input required = 'true' type="text" class="form-control" ng-model="fixture.fixtureData.venue">
+   						</div>
+  					</div>
+  				</td>
+
+  				<td>
+        			<div class="form-group">
+						<label class="col-sm-4 control-label">competition</label> 
+						<div class="col-sm-8">
+							<input required = 'true' type="text" class="form-control" ng-model="fixture.fixtureData.competition">
+   						</div>
+  					</div>
+  				</td>
+
+        	</tr>
+
+        	<tr>
+
+       			<td>
+
+		       		<div class="form-group">
+						<div class="col-sm-offset-2 col-sm-6">
+							<button type="submit" class="btn btn-success btn-lg btn-block" ng-if="fixture.type == 'create'">Create</button>
+							<button type="submit" class="btn btn-success btn-lg btn-block" ng-if="fixture.type == 'edit'">Update</button>
+				  		</div>
+				  	</div>
+
+			  	</td>
+
+			  	
+		  		<td>
+					<div class="row show-hide-message" ng-show="fixture.message">
+						<div class="col-sm-6 col-sm-offset-2">
+						<div class="alert alert-info"> {{ fixture.message }}</div>
+							</div>
+					</div>
+
+				</td>
+
+       		</tr>
+
+
+       		
+
+		</tbody>
+	</form>
+	
+</div>
+
+
+
+  	
