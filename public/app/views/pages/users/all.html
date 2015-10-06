@@ -17,35 +17,42 @@
 		<p>Loading Users...</p>
 </div>
 
+<div class="container">
+    <div class="row">
+        <div class="panel panel-primary filterable">
+            <div class="panel-heading">
+                <h3 class = "panel-title"> Players </h3>
+                <div class="pull-right">
+                </div>
+            </div>
 
-<table class="table table-bordered table-striped" ng-show="user.users"> 
-	<thead>
-		<tr>
-			<th>Player </th>
-			<th>email</th> 
-			<th>Position</th>
-    	</tr>
-  	</thead>
-<tbody>
-	 <!-- LOOP OVER THE USERS -->
-	<tr ng-repeat="person in user.users"> 
-		<td>{{person.username}} &nbsp &nbsp &nbsp
-			<a ng-if = "person.username == main.user.username" ng-href="/users/{{ person._id }}">
-				<span class="glyphicon glyphicon-pencil">&nbsp </span> 
-			</a>
-			<a ng-if = "person.username == main.user.username" 	href="#" ng-click="user.deleteUser(person._id)">
-				<span class="glyphicon glyphicon-trash"></span>
-			</a>
+		<table class="table" ng-show="user.users"> 
+			<thead class = "filters">
+				<tr>
+					<th>Player </th>
+					<th>email</th> 
+					<th>Position</th>
+		    	</tr>
+		  	</thead>
+			<tbody>
+				 <!-- LOOP OVER THE USERS -->
+				<tr ng-repeat="person in user.users"> 
+					<td>{{person.username}} &nbsp &nbsp &nbsp
+						<a ng-if = "person.username == main.user.username" ng-href="/users/{{ person._id }}">
+							<span class="glyphicon glyphicon-pencil">&nbsp </span> 
+						</a>
+						<a ng-if = "person.username == main.user.username" 	href="#" ng-click="user.deleteUser(person._id)">
+							<span class="glyphicon glyphicon-trash"></span>
+						</a>
 
-		</td>
-		<td>{{ person.email }}</td>
-		<td>{{ person.position1 }}</td>
-		
+					</td>
+					<td>{{ person.email }}</td>
+					<td>{{ person.position1 }}</td>
+					
 
 
-	</tr>
+				</tr>
 
-  </tbody>
-</table>
+			  </tbody>
+		</table>
 
-<p> {{main.user.position1}} </p>

@@ -13,6 +13,7 @@ angular.module('fixtureService', ['userService'])
 		return $http.get('/api/fixtures/' + id);
 	};
 
+
 	// get all fixtures
 
 	fixtureFactory.all = function() {
