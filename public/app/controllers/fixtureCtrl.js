@@ -1,8 +1,10 @@
 angular.module('fixtureCtrl', ['fixtureService', 'userService', 'authService', 'fixtureAttendService']) 	
 
-.controller('fixtureController', ["Fixture", "FixtureAttend", "Auth", "$location", "$route", function(Fixture,  FixtureAttend, Auth, $location, $route) {
+.controller('fixtureController', ["Fixture", "FixtureAttend", "Auth", "$location", "$route", "$modal", "$log", 
+	function(Fixture,  FixtureAttend, Auth, $location, $route, $modal, $log) {
 
 	var vm = this;
+
 
 	    // set a processing variable to show loading things
 	vm.processing = true;
@@ -109,6 +111,91 @@ angular.module('fixtureCtrl', ['fixtureService', 'userService', 'authService', '
 	};
 
 
+
+  vm.open_submit = function (size) {
+
+    var modalInstance = $modal.open({
+      animation: true,
+      templateUrl: 'modalSubmitFixture.html',
+      controller: 'modalSubmitFixture',
+      scope: vm,
+      size: size
+      
+      
+    });
+
+    modalInstance.result.then(function () {
+    	$route.reload();
+    }, 	function() {
+      $log.info('Modal dismissed at: ' + new Date());
+    });
+
+  };
+
+   vm.open_edit = function (size) {
+
+    var modalInstance = $modal.open({
+      animation: true,
+      templateUrl: 'modalEditFixture.html',
+      controller: 'modalEditFixture',
+      scope: vm,
+      size: size
+      
+    });
+
+    modalInstance.result.then(function () {
+    	$route.reload();
+    }, 	function() {
+      $log.info('Modal dismissed at: ' + new Date());
+    });
+
+  };
+
+
+
+}])
+
+.controller("modalSubmitFixture", ["Fixture", "$location", "$timeout", "$modalInstance", "$route",
+function(Fixture, $location, $timeout, $modalInstance, $route) {
+
+	var vm = this;
+
+	
+
+    vm.ok = function () { 
+      $modalInstance.close(vm.selected.message);  
+
+    };
+
+    vm.cancel = function () {
+      $modalInstance.dismiss('cancel');
+
+    };
+
+    vm.addFixture = function() {
+
+    	vm.processing = true;
+
+    	vm.message =  '';
+
+
+       	Fixture.create(vm.fixtureData).success(function(data) {
+
+				vm.processing = false;
+
+				// clear the form
+
+				vm.fixtureData = {};
+
+				vm.message = data.message;
+
+			});
+    
+      };
+
+
+
+
 }])
 
 
@@ -122,6 +209,7 @@ angular.module('fixtureCtrl', ['fixtureService', 'userService', 'authService', '
 	vm.type = 'create' ;
 
 	// function to create user
+
 
 	vm.saveFixture = function() {
 
