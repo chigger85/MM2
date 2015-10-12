@@ -8,7 +8,8 @@ angular.module('userApp', [
   'userService',
   'fixtureService',
   'fixtureAttendService',
-  'goalService'
+  'goalService',
+  'ui.bootstrap',
 ])
 
 // application configuration to integrate token into requests

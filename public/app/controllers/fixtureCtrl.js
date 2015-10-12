@@ -118,6 +118,7 @@ angular.module('fixtureCtrl', ['fixtureService', 'userService', 'authService', '
       animation: true,
       templateUrl: 'modalSubmitFixture.html',
       controller: 'modalSubmitFixture',
+      controllerAs: 'fixture',
       scope: vm,
       size: size
       
@@ -138,6 +139,7 @@ angular.module('fixtureCtrl', ['fixtureService', 'userService', 'authService', '
       animation: true,
       templateUrl: 'modalEditFixture.html',
       controller: 'modalEditFixture',
+      controllerAs: "fixture",
       scope: vm,
       size: size
       
