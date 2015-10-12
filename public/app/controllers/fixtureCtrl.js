@@ -1,4 +1,4 @@
-angular.module('fixtureCtrl', ['fixtureService', 'userService', 'authService', 'fixtureAttendService']) 	
+angular.module('fixtureCtrl', ['fixtureService', 'userService', 'authService', 'fixtureAttendService', 'ui.bootstrap']) 	
 
 .controller('fixtureController', ["Fixture", "FixtureAttend", "Auth", "$location", "$route", "$modal", "$log", 
 	function(Fixture,  FixtureAttend, Auth, $location, $route, $modal, $log) {
