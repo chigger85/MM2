@@ -1,5 +1,5 @@
 module.exports = {
 'port': process.env.PORT || 8080,
-'database': "mongodb://chigs85:newmag1@waffle.modulusmongo.net:27017/ux8ynupE",
+'database': "mongodb://SteveK:newmag1@ds033153.mongolab.com:33153/newmag",
 'secret': 'manwhobuggeredaheron'
 };
