@@ -188,7 +188,7 @@ function($scope,Fixture, $location, $timeout, $modalInstance, $route) {
 
     	$scope.message =  '';
 
-    	$scope.fixtureData = '';
+    	
 
 
        	Fixture.create($scope.fixtureData).success(function(data) {
@@ -201,13 +201,15 @@ function($scope,Fixture, $location, $timeout, $modalInstance, $route) {
 
 				$scope.message = data.message;
 
+				$scope.fixtureData = '';
+
 			});
     
       };
 
       $scope.deselect = function() {
 
-        $scope.fixtureData = "";
+        $scope.fixtureData = {};
     }
 
 
