@@ -1,7 +1,7 @@
 <div class="page-header">
  <h2>
 	Fixtures
-	<a ng-if = "main.user.userType == 'admin'" href="/availability/create" class="btn btn-default"> 
+	<a ng-if = "main.user.userType == 'admin'" href="#" class="btn btn-default" ng-click="open_submit()"> 
 		<span class="glyphicon glyphicon-plus"></span>
 		
 	</a> 
@@ -9,7 +9,7 @@
 </div>
 
 
-<div class = "jumbotron text-center" ng-show = "fixture.processing">
+<div class = "jumbotron text-center" ng-show = "processing">
     <span class="glyphicon glyphicon-repeat spinner"></span> 
         <p>Loading Fixtures...</p>
        
@@ -23,7 +23,7 @@
                 <div class="pull-right">
                 </div>
             </div>
-            <table class="table" ng-show = "fixture.fixtures">
+            <table class="table" ng-show = "fixtures">
                 <thead>
                     <tr class="filters">
                         <th><input type="text" class="form-control" placeholder="Date" disabled></th>
@@ -37,7 +37,7 @@
                 </thead>
                 <tbody>
          <!-- LOOP OVER THE fixtures -->
-                     <tr ng-repeat="detail in fixture.fixtures" class = "body"> 
+                     <tr ng-repeat="detail in fixtures" class = "body"> 
                        <td> {{detail.date | date: 'longDate'}}</td>
                         <td>{{detail.opposition}}</td>
                         <td> 
@@ -49,12 +49,12 @@
                         <td>
 
                             <div ng-if = "detail.available.indexOf(main.user.id) >-1" class="yes glyphicon glyphicon-thumbs-up">
-                                <a href="" class="btn btn-sm" ng-click = "fixture.removeAttend(detail._id)"> change </a>
+                                <a href="" class="btn btn-sm" ng-click = "removeAttend(detail._id)"> change </a>
                         
                             </div>
 
                             <div ng-if = "detail.available.indexOf(main.user.id) ==-1" class="no glyphicon glyphicon-thumbs-down">
-                                <a href="" class="btn btn-sm" ng-click = "fixture.addAttend(detail._id)"> change </a>
+                                <a href="" class="btn btn-sm" ng-click = "addAttend(detail._id)"> change </a>
                             </div>
                         
                         </td> 
@@ -62,7 +62,7 @@
                             <a ng-if = "main.user.userType == 'admin'" ng-href="/availability/{{ detail._id }}">
                                 <span class="glyphicon glyphicon-pencil">&nbsp </span> 
                             </a>
-                            <a ng-if = "main.user.userType == 'admin'"  href="#" ng-click="fixture.deleteFixture(detail ._id)">
+                            <a ng-if = "main.user.userType == 'admin'"  href="#" ng-click="deleteFixture(detail ._id)">
                                 <span class="glyphicon glyphicon-trash"></span>
                             </a>
                     </td>
@@ -75,11 +75,10 @@
         </div>
     </div>
 </div>
-</div>
 
-<div ng-controller="modalSubmitFixture">
+<div >
     <script type="text/ng-template" id="modalSubmitFixture.html">
-    <form class="form-horizontal" ng-submit="fixture.addFixture()">
+    <form class="form-horizontal" ng-submit="addFixture()">
         <div class="modal-header">
             <h3 class="modal-title">Add Fixture</h3>
         </div>
@@ -89,29 +88,28 @@
                 <div class="form-group">
                         <label class="col-sm-4 control-label"> Date </label> 
                         <div class="col-sm-8">
-                            <input required = 'true' type="date" class="form-control" ng-model="fixture.fixtureData.date">
+                            <input required = 'true' type="date" class="form-control" ng-model="fixtureData.date">
                         </div>
                 </div>
 
                 <div class="form-group">
                         <label class="col-sm-4 control-label">Opposition</label> 
                         <div class="col-sm-8">
-                            <input required = 'true'  type="text" class="form-control" ng-model="fixture.fixtureData.opposition">
+                            <input required = 'true'  type="text" class="form-control" ng-model="fixtureData.opposition">
                         </div>
                 </div>
 
 
         </div>
         <div class="modal-footer">
-            <button class="btn btn-primary" type="button" ng-click="fixture.addFixture(); fixture.ok()">OK</button>
-            <button class="btn btn-warning" type="button" ng-click="fixture.cancel()">Cancel</button>
+            <button class="btn btn-primary" type="button" ng-click="addFixture(); ok()">OK</button>
+            <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
         </div>
     </form>
     </script>
 
-    <button type="button" class="btn btn-default" ng-click="open()">Open me!</button>
-    <button type="button" class="btn btn-default" ng-click="open('lg')">Large modal</button>
-    <button type="button" class="btn btn-default" ng-click="open('sm')">Small modal</button>
-
 </div>
+    
+
+
 

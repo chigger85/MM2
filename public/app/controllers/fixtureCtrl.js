@@ -1,26 +1,26 @@
-angular.module('fixtureCtrl', ['fixtureService', 'userService', 'authService', 'fixtureAttendService', 'ui.bootstrap']) 	
+angular.module('fixtureCtrl', ['fixtureService', 'userService', 'authService', 'fixtureAttendService']) 	
 
-.controller('fixtureController', ["Fixture", "FixtureAttend", "Auth", "$location", "$route", "$modal", "$log", 
-	function(Fixture,  FixtureAttend, Auth, $location, $route, $modal, $log) {
+.controller('fixtureController', [ "$scope","Fixture", "FixtureAttend", "Auth", "$location", "$route", "$modal", "$log", 
+	function($scope, Fixture,  FixtureAttend, Auth, $location, $route, $modal, $log) {
 
-	var vm = this;
+	// var vm = this;
 
 
 	    // set a processing variable to show loading things
-	vm.processing = true;
+	$scope.processing = true;
 
 	// grab all the fixtures at page load
 	Fixture.all().success(function(data) {
       // when all the fixtures come back, remove the processing variable
-		vm.processing = false;
+		$scope.processing = false;
       // bind the fixtures that come back to vm.fixtures
-     	vm.fixtures = data;
+     	$scope.fixtures = data;
 
     });
 
    Auth.getUser().then(function (data) {
 
-     		vm.user = data.data
+     		$scope.user = data.data
 
 	});
 
@@ -31,9 +31,9 @@ angular.module('fixtureCtrl', ['fixtureService', 'userService', 'authService', '
 
 
         // function to delete a user
-	vm.deleteFixture = function(id) { 
+	$scope.deleteFixture = function(id) { 
 
-		vm.processing = true;
+		$scope.processing = true;
 	  	// accepts the user id as a parameter
 		Fixture.delete(id).success(function(data) {
 		// get all users to update the table
@@ -41,8 +41,8 @@ angular.module('fixtureCtrl', ['fixtureService', 'userService', 'authService', '
 		// to return the list of users with the delete call 
 			Fixture.all().success(function(data) { 
 
-				vm.processing = false; 
-				vm.fixtures = data;
+				$scope.processing = false; 
+				$scope.fixtures = data;
 			});
 		}); 
 
@@ -51,29 +51,29 @@ angular.module('fixtureCtrl', ['fixtureService', 'userService', 'authService', '
 	};	
 
 
-	vm.getAttend = function(id) {
+	$scope.getAttend = function(id) {
 
 		FixtureAttend.getAttendance(id).success(function(data) {
 
-			vm.attData = data;
-			console.log(vm.attData);
+			$scope.attData = data;
+			console.log($scope.attData);
 		})
 	}
 
 	
 
-	vm.removeAttend = function(id) {
+	$scope.removeAttend = function(id) {
 
 		 FixtureAttend.removeAttendance(id).success(function(data) {
 
-		 	vm.message = data.message;
+		 	$scope.message = data.message;
 		 	console.log(data.message);
 
 		 	FixtureAttend.getAttendance(id).success(function(data) {
 
-		 		vm.attData = data;
+		 		$scope.attData = data;
 		 		console.log(data);
-		 		console.log(vm.user);
+		 		console.log($scope.user);
 
 
 		 	});
@@ -88,18 +88,18 @@ angular.module('fixtureCtrl', ['fixtureService', 'userService', 'authService', '
 
 
 
-	vm.addAttend = function(id) {
+	$scope.addAttend = function(id) {
 
 		 FixtureAttend.addAttendance(id).success(function(data) {
 
-		 	vm.message = data.message;
+		 	$scope.message = data.message;
 		 	console.log(data.message);
 
 		 	FixtureAttend.getAttendance(id).success(function(data) {
 
-		 		vm.attData = data;
+		 		$scope.attData = data;
 		 		console.log(data);
-		 		console.log(vm.user);	
+		 		console.log($scope.user);	
 		 	});
 
 
@@ -112,16 +112,14 @@ angular.module('fixtureCtrl', ['fixtureService', 'userService', 'authService', '
 
 
 
-  vm.open_submit = function (size) {
+  $scope.open_submit = function () {
 
     var modalInstance = $modal.open({
       animation: true,
       templateUrl: 'modalSubmitFixture.html',
-      controller: 'modalSubmitFixture',
-      controllerAs: 'fixture',
-      scope: vm,
-      size: size
-      
+      controller: 'modalSubmitFixture',	
+      scope: $scope,
+     
       
     });
 
@@ -133,16 +131,14 @@ angular.module('fixtureCtrl', ['fixtureService', 'userService', 'authService', '
 
   };
 
-   vm.open_edit = function (size) {
+   $scope.open_edit = function () {
 
     var modalInstance = $modal.open({
       animation: true,
       templateUrl: 'modalEditFixture.html',
       controller: 'modalEditFixture',
-      controllerAs: "fixture",
-      scope: vm,
-      size: size
-      
+      scope: $scope,
+    	
     });
 
     modalInstance.result.then(function () {
@@ -157,39 +153,39 @@ angular.module('fixtureCtrl', ['fixtureService', 'userService', 'authService', '
 
 }])
 
-.controller("modalSubmitFixture", ["Fixture", "$location", "$timeout", "$modalInstance", "$route",
-function(Fixture, $location, $timeout, $modalInstance, $route) {
+.controller("modalSubmitFixture", ["$scope","Fixture", "$location", "$timeout", "$modalInstance", "$route",
+function($scope,Fixture, $location, $timeout, $modalInstance, $route) {
 
-	var vm = this;
-
+	// var vm = this;
+	$scope.message = "Fixture created";
 	
 
-    vm.ok = function () { 
-      $modalInstance.close(vm.selected.message);  
+    $scope.ok = function () { 
+      $modalInstance.close($scope.message);  
 
     };
 
-    vm.cancel = function () {
+   $scope.cancel = function () {
       $modalInstance.dismiss('cancel');
 
     };
 
-    vm.addFixture = function() {
+    $scope.addFixture = function() {
 
-    	vm.processing = true;
+    	$scope.processing = true;
 
-    	vm.message =  '';
+    	$scope.message =  '';
 
 
-       	Fixture.create(vm.fixtureData).success(function(data) {
+       	Fixture.create($scope.fixtureData).success(function(data) {
 
-				vm.processing = false;
+				$scope.processing = false;
 
 				// clear the form
 
-				vm.fixtureData = {};
+				$scope.fixtureData = {};
 
-				vm.message = data.message;
+				$scope.message = data.message;
 
 			});
     

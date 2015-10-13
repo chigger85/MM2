@@ -1,5 +1,6 @@
 angular.module('userApp', [
   'ngAnimate',
+  'ui.bootstrap',
   'app.routes',
   'authService',
   'mainCtrl',
@@ -8,8 +9,8 @@ angular.module('userApp', [
   'userService',
   'fixtureService',
   'fixtureAttendService',
-  'goalService',
-  'ui.bootstrap',
+  'goalService'
+  
 ])
 
 // application configuration to integrate token into requests
