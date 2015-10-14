@@ -48,12 +48,12 @@
                         <td>{{ detail.comp}}</td>
                         <td>
 
-                            <div ng-if = "detail.available.indexOf(main.user.id) >-1" class="yes glyphicon glyphicon-thumbs-up">
+                            <div ng-show = "detail.available.indexOf(main.user.id) >-1" class="yes glyphicon glyphicon-thumbs-up">
                                 <a href="" class="btn btn-sm" ng-click = "removeAttend(detail._id)"> change </a>
                         
                             </div>
 
-                            <div ng-if = "detail.available.indexOf(main.user.id) ==-1" class="no glyphicon glyphicon-thumbs-down">
+                            <div ng-show = "detail.available.indexOf(main.user.id) ==-1" class="no glyphicon glyphicon-thumbs-down">
                                 <a href="" class="btn btn-sm" ng-click = "addAttend(detail._id)"> change </a>
                             </div>
                         
@@ -75,6 +75,11 @@
         </div>
     </div>
 </div>
+
+<!-- <div ng-show = "attending = 'true'"  class="yes glyphicon glyphicon-thumbs-up">
+ hello
+</div> -->
+
 
 <div >
     <script type="text/ng-template" id="modalSubmitFixture.html">

@@ -10,19 +10,30 @@ angular.module('fixtureCtrl', ['fixtureService', 'userService', 'authService', '
 	$scope.processing = true;
 
 	// grab all the fixtures at page load
-	Fixture.all().success(function(data) {
+
+	var refresh = function(){
+
+	    Fixture.all().success(function(data) {
       // when all the fixtures come back, remove the processing variable
 		$scope.processing = false;
       // bind the fixtures that come back to vm.fixtures
      	$scope.fixtures = data;
 
-    });
+
+   	 });
+	};
+
+	refresh();
+	
+
 
    Auth.getUser().then(function (data) {
 
      		$scope.user = data.data
 
 	});
+
+
 
 
 
@@ -40,14 +51,34 @@ angular.module('fixtureCtrl', ['fixtureService', 'userService', 'authService', '
      };
 
 
+
+
 	$scope.getAttend = function(id) {
 
 		FixtureAttend.getAttendance(id).success(function(data) {
 
 			$scope.attData = data;
-			console.log($scope.attData);
+			
+			console.log($scope.user);
+
+
 		})
 	}
+
+
+	// Fixture.all().success(function(data) {
+
+	// 	$scope.availables = data[0].available;
+	// 	if ($scope.availables.indexOf($scope.user.id) > -1) {
+
+	// 		$scope.attending = true;
+	// 	}
+
+	// 	else {
+
+	// 		$scope.attending = false;
+	// 	}
+	// });
 
 	
 
@@ -62,15 +93,19 @@ angular.module('fixtureCtrl', ['fixtureService', 'userService', 'authService', '
 
 		 		$scope.attData = data;
 		 		console.log(data);
-		 		console.log($scope.user);
+		 		console.log($scope.user.id);
+		 		refresh();
+		 		
 
 
 		 	});
 
+		 	
+
 		 
 		});
 
-		 $route.reload();
+		 
 
 
 	};
@@ -88,13 +123,16 @@ angular.module('fixtureCtrl', ['fixtureService', 'userService', 'authService', '
 
 		 		$scope.attData = data;
 		 		console.log(data);
-		 		console.log($scope.user);	
+		 		console.log($scope.user.id);
+		 		refresh();
 		 	});
+
+
 
 
 		 });
 
-		 $route.reload();
+		 
 
 
 	};
