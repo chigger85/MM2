@@ -1,28 +1,28 @@
 angular.module('userCtrl', ['userService'])
 
-.controller('userController', ["User", "Auth", function(User, Auth) {
+.controller('userController', ["$scope", "User", "Auth", "$route", "$log", "$modal", function($scope, User, Auth, $route, $log, $modal) {
 
 
-	var vm = this;
+
    
 
     // set a processing variable to show loading things
-	vm.processing = true;
+	$scope.processing = true;
   // grab all the users at page load
 	User.all().success(function(data) {
       // when all the users come back, remove the processing variable
-		vm.processing = false;
-      // bind the users that come back to vm.users
-     vm.users = data
+		$scope.processing = false;
+      // bind the users that come back to $scope.users
+     $scope.users = data;
 
     });
 
 
 
     // function to delete a user
-	vm.deleteUser = function(id) { 
+	$scope.deleteUser = function(id) { 
 
-		vm.processing = true;
+		$scope.processing = true;
 	  	// accepts the user id as a parameter
 		User.delete(id).success(function(data) {
 		// get all users to update the table
@@ -30,12 +30,131 @@ angular.module('userCtrl', ['userService'])
 		// to return the list of users with the delete call 
 			User.all().success(function(data) { 
 
-				vm.processing = false; 
-				vm.users = data;
+				$scope.processing = false; 
+				$scope.users = data;
 			});
 		}); 
 
 	};
+
+	$scope.open_submit = function () {
+
+
+    var modalInstance = $modal.open({
+      animation: true,
+      templateUrl: 'modalSubmitUser.html',
+      controller: 'modalSubmitUser',	
+      scope: $scope,
+      size: 'lg',
+     
+      
+    });
+
+    modalInstance.result.then(function () {
+    	$route.reload();
+    }, 	function() {
+      $log.info('Modal dismissed at: ' + new Date());
+    });
+
+  };
+
+  $scope.open_edit = function () {
+
+    var modalInstance = $modal.open({
+      animation: true,
+      templateUrl: 'modalEditUser.html',
+      controller: 'modalEditUser',
+      scope: $scope,
+
+    	
+    });
+
+    modalInstance.result.then(function () {
+    	$route.reload();
+    }, 	function() {
+      $log.info('Modal dismissed at: ' + new Date());
+    });
+
+  };
+
+   $scope.open_delete = function () {
+
+    var modalInstance = $modal.open({
+      animation: true,
+      templateUrl: 'modalDeleteUser.html',
+      controller: 'modalDeleteUser',
+      scope: $scope,
+
+    	
+    });
+
+    modalInstance.result.then(function () {
+    	$route.reload();
+    }, 	function() {
+      $log.info('Modal dismissed at: ' + new Date());
+    });
+
+  };
+
+
+}])
+
+
+
+.controller("modalSubmitUser", ["$scope","User", "$location", "$timeout", "$modalInstance", "$route",
+function($scope,User, $location, $timeout, $modalInstance, $route) {
+
+	// var vm = this;
+	$scope.message = "User Created";
+	$scope.type = 'create' ;
+	
+
+    $scope.ok = function () { 
+      $modalInstance.close($scope.message);  
+
+    };
+
+   $scope.cancel = function () {
+      $modalInstance.dismiss('cancel');
+
+    };
+
+    $scope.addUser = function() {
+
+
+    	$scope.processing = true;
+		// clear the message
+
+		$scope.message =  '';
+
+		User.create($scope.userData).success(function(data) {
+
+				$scope.processing = false;
+
+				// clear the form
+
+				$scope.userData = {};
+
+				$scope.message = data.message;
+
+		});
+
+		$timeout(function(){
+            
+                   $location.path('/users')
+              
+            		}, 2000);
+
+		
+
+		};
+
+
+      $scope.deselect = function() {
+
+        $scope.userData = {};
+
+    };
 
 
 
@@ -43,38 +162,71 @@ angular.module('userCtrl', ['userService'])
 }])
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 .controller("userCreateController", ["User", "$location", "$timeout", function(User, $location, $timeout) {
 
-	var vm = this;
-
+	
 	// variable to hide/show elements of view
 	// differentiates between create and edit pages
 
-	vm.type = 'create' ;
+	$scope.type = 'create' ;
 
 	// function to create user
 
-	vm.saveUser = function() {
+	$scope.saveUser = function() {
 
-		vm.processing = true;
+		$scope.processing = true;
 
 
 		// clear the message
 
-		vm.message =  '';
+		$scope.message =  '';
 
 		// use the userCreate function in the user Service
 
-		User.create(vm.userData)
+		User.create($scope.userData)
 			.success(function(data) {
 
-				vm.processing = false;
+				$scope.processing = false;
 
 				// clear the form
 
-				vm.userData = {};
+				$scope.userData = {};
 
-				vm.message = data.message;
+				$scope.message = data.message;
 
 
 
@@ -92,19 +244,54 @@ angular.module('userCtrl', ['userService'])
 
 }])
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 .controller("userEditController", ["User", "$routeParams","$location", "$timeout", function(User, $routeParams, $location, $timeout) {
 
-	var vm = this;
+	var $scope = this;
 
 	// variable to hide/show elemnts of the view
 	// differentiates between create and edit pages
 
 
-	vm.type = 'edit';
+	$scope.type = 'edit';
 
 	
 
-	// console.log(vm.date)
+	// console.log($scope.date)
 
 	// get the user data for the user you want to edit 
 	// $routeParams is the way we grab data from the URL
@@ -112,38 +299,38 @@ angular.module('userCtrl', ['userService'])
 	User.get($routeParams.user_id)
 		.success(function(data) {
 
-			vm.userData = data;
+			$scope.userData = data;
 
-			vm.userData.dob = new Date(vm.userData.dob);  //need to instantiate dob as date object
+			$scope.userData.dob = new Date($scope.userData.dob);  //need to instantiate dob as date object
 
 		});
 
 	//function to save user
 
 
-	vm.saveUser =  function() {
+	$scope.saveUser =  function() {
 
-		vm.processing = true;
+		$scope.processing = true;
 
-		vm.message = '';
+		$scope.message = '';
 
 
 		// call the userService function to update
 
-		User.update($routeParams.user_id, vm.userData)
+		User.update($routeParams.user_id, $scope.userData)
 
 			.success(function(data) {
 
-				vm.processing = false;
+				$scope.processing = false;
 
 
 				//clear the form
 
-				vm.userData = {};
+				$scope.userData = {};
 
-				//bind the message from our API to vm.message
+				//bind the message from our API to $scope.message
 
-				vm.message = data.message;
+				$scope.message = data.message;
 
 
 				

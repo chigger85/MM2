@@ -124,7 +124,7 @@ angular.module('fixtureCtrl', ['fixtureService', 'userService', 'authService', '
 		 		$scope.attData = data;
 		 		console.log(data);
 		 		console.log($scope.user.id);
-		 		refresh();
+		 		refresh();	
 		 	});
 
 
@@ -203,8 +203,8 @@ angular.module('fixtureCtrl', ['fixtureService', 'userService', 'authService', '
 
 }])
 
-.controller("modalSubmitFixture", ["$scope","Fixture", "$location", "$timeout", "$modalInstance", "$route",
-function($scope,Fixture, $location, $timeout, $modalInstance, $route) {
+.controller("modalSubmitFixture", ["$scope","Fixture","$modalInstance", "$route",
+function($scope, Fixture, $modalInstance, $route) {
 
 	// var vm = this;
 	$scope.message = "Fixture created";

@@ -1,8 +1,8 @@
 <div class="page-header">
  <h2>
 	Players
-	<a ng-if = "main.user.userType == 'admin'" href="/users/create" class="btn btn-default"> 
-		<span class="glyphicon glyphicon-plus"></span>
+	<a ng-if = "main.user.userType == 'admin'" href="#" class="btn btn-default" ng-click = "open_submit()"> 
+		<span class="glyphicon glyphicon-plus" ></span>
 
 	</a> 
 </h2>
@@ -12,7 +12,7 @@
 
 <!-- LOADING MESSAGE -->
 
-<div class="jumbotron text-center" ng-show="user.processing"> 
+<div class="jumbotron text-center" ng-show="processing"> 
 	<span class="glyphicon glyphicon-repeat spinner"></span> 
 		<p>Loading Users...</p>
 </div>
@@ -26,7 +26,7 @@
                 </div>
             </div>
 
-		<table class="table" ng-show="user.users"> 
+		<table class="table" ng-show="users"> 
 			<thead class = "filters">
 				<tr>
 					<th>Player </th>
@@ -36,12 +36,12 @@
 		  	</thead>
 			<tbody>
 				 <!-- LOOP OVER THE USERS -->
-				<tr ng-repeat="person in user.users"> 
+				<tr ng-repeat="person in users"> 
 					<td>{{person.username}} &nbsp &nbsp &nbsp
 						<a ng-if = "person.username == main.user.username" ng-href="/users/{{ person._id }}">
 							<span class="glyphicon glyphicon-pencil">&nbsp </span> 
 						</a>
-						<a ng-if = "person.username == main.user.username" 	href="#" ng-click="user.deleteUser(person._id)">
+						<a ng-if = "person.username == main.user.username" 	href="#" ng-click="deleteUser(person._id)">
 							<span class="glyphicon glyphicon-trash"></span>
 						</a>
 
@@ -55,4 +55,193 @@
 
 			  </tbody>
 		</table>
+
+	</div>
+</div>
+
+<div >
+
+
+    <script type="text/ng-template" id="modalSubmitUser.html">
+
+        <div class="modal-header">
+            <h3 class="modal-title">Sign Up</h3>
+        </div>
+
+    
+
+        <div class="modal-body">
+		
+			 <table class="table">
+		        <thead>
+		            <tr>
+		                <th> <h3> Player Details </h3> </th>   
+		            </tr>
+		        </thead>
+
+		        <tbody>
+
+		        	<tr>
+		        		<td>
+		        			<div class="form-group">
+								<label class="col-sm-4 control-label">User Name</label> 
+								<div class="col-sm-6">
+									<input required = 'true' type="text" class="form-control" ng-model="userData.username">
+		   						</div>
+		  					</div>
+		        		</td>
+		        		<td>
+		        			<div class="form-group">
+								<label class="col-sm-4 control-label">Password</label> 
+								<div class="col-sm-6">
+									<input required = 'true'  type="password" class="form-control" ng-model="userData.password">
+		   						</div>
+		  					</div>
+		  				</td>
+		        	</tr>
+
+		        	<tr>
+		        		<td>
+		        			<div class="form-group">
+								<label class="col-sm-4 control-label">First Name</label> 
+								<div class="col-sm-6">
+									<input required = 'true' type="text" class="form-control" ng-model="userData.firstname">
+		   						</div>
+		  					</div>
+		  				</td>
+
+		  				<td>
+		        			<div class="form-group">
+								<label class="col-sm-4 control-label">Second Name </label> 
+								<div class="col-sm-6">
+									<input required = 'true'  type="text" class="form-control" ng-model="userData.secondname">
+		   						</div>
+		  					</div>
+		  				</td>
+
+		  				<td>
+		        			<div class="form-group">
+								<label class="col-sm-4 control-label">D.O.B</label> 
+								<div class="col-sm-6">
+									<input required = 'true' type="date" class="form-control" ng-model="userData.dob">
+		   						</div>
+		  					</div>
+		  				</td>
+
+		        	</tr>
+
+		        	<tr>
+		        		<td>
+		        			<div class="form-group">
+								<label class="col-sm-4 control-label">First Choice Position </label> 
+								<div class="col-sm-6">
+									<select required = 'true' ng-model="userData.position1">
+								        <option value="GK">GK</option>
+								        <option value="FB">FB</option>
+								        <option value="CB">CB</option>
+								        <option value="MF">CMF </option>
+								        <option value="WMF">WMF</option>
+								        <option value="CF">CF</option>
+		   			 				</select>
+		   						</div>
+		  					</div>
+		  				</td>
+
+		  				<td>
+		        			<div class="form-group">
+								<label class="col-sm-4 control-label">Second Choice Position </label> 
+								<div class="col-sm-6">
+									<select ng-model="userData.position2">
+								        <option value="GK">GK</option>
+								        <option value="FB">FB</option>
+								        <option value="CB">CB</option>
+								        <option value="MF">CMF </option>
+								        <option value="WMF">WMF</option>
+								        <option value="CF">CF</option>
+		   			 				</select>
+		   						</div>
+		  					</div>
+		  				</td>
+
+		        	</tr>
+
+		        	<tr>
+
+		  				<td>
+		        			<div class="form-group">
+								<label class="col-sm-4 control-label">email </label> 
+								<div class="col-sm-6">
+									<input required = 'true' type="text" class="form-control" ng-model="userData.email">
+		   						</div>
+		  					</div>
+		  				</td>
+
+
+		  				<td>
+		        			<div class="form-group">
+								<label class="col-sm-4 control-label">Mobile</label> 
+								<div class="col-sm-6">
+									<input required = 'true' type="text" class="form-control" ng-model="userData.mob">
+		   						</div>
+		  					</div>
+		  				</td>
+
+		        	</tr>
+
+		        	<tr>
+
+		  				<td>
+		        			<div class="form-group">
+								<label class="col-sm-4 control-label">Address </label> 
+								<div class="col-sm-10">
+									<input required = 'true' type="text" class="form-control" ng-model="userData.address">
+		   						</div>
+		  					</div>
+		  				</td>
+
+
+		        	</tr>
+
+		       		<tr>
+
+		       			<td>
+
+				       		<div class="form-group">
+								<div class="col-sm-offset-2 col-sm-6">
+									<button type="submit" class="btn btn-success btn-lg btn-block" ng-if="user.type == 'create'">Create User</button>
+									<button type="submit" class="btn btn-success btn-lg btn-block" ng-if="user.type == 'edit'">Update User</button>
+						  		</div>
+						  	</div>
+
+					  	</td>
+
+					  	
+				  		<td>
+							<div class="row show-hide-message" ng-show="user.message">
+								<div class="col-sm-6 col-sm-offset-2">
+								<div class="alert alert-info"> {{ user.message }}</div>
+									</div>
+							</div>
+
+						</td>
+
+		       		</tr>
+
+				</tbody>
+
+			  </table>
+	            
+
+	        </div>
+
+        <div class = "modal-footer"> 
+            <button class="btn btn-primary" type="button" ng-click="addUser(); ok()">OK</button>
+            <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+        </div>
+
+
+    </script>
+
+</div>
+	
 
