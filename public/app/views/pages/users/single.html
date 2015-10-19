@@ -1,15 +1,15 @@
 <div class="page-header">
-	<h2 ng-if="user.type == 'create'">Create Player</h2> 
-	<h2 ng-if="user.type == 'edit'">Edit Player</h2>
+	<h2 ng-if="type == 'create'">Create Player</h2> 
+	<h2 ng-if="type == 'edit'">Edit Player</h2>
 </div>
 
 <div class="jumbotron">
-<form class="form-horizontal" ng-submit="user.saveUser()">
+<form class="form-horizontal" ng-submit="saveUser()">
 	
 	 <table class="table">
         <thead>
             <tr>
-                <th> <h3> Player Details </h3> </th>   
+                <th> <h4> Player Details </h4> </th>   
             </tr>
         </thead>
 
@@ -20,7 +20,7 @@
         			<div class="form-group">
 						<label class="col-sm-4 control-label">User Name</label> 
 						<div class="col-sm-6">
-							<input required = 'true' type="text" class="form-control" ng-model="user.userData.username">
+							<input required = 'true' type="text" class="form-control" ng-model="userData.username">
    						</div>
   					</div>
         		</td>
@@ -28,7 +28,7 @@
         			<div class="form-group">
 						<label class="col-sm-4 control-label">Password</label> 
 						<div class="col-sm-6">
-							<input required = 'true'  type="password" class="form-control" ng-model="user.userData.password">
+							<input required = 'true'  type="password" class="form-control" ng-model="userData.password">
    						</div>
   					</div>
   				</td>
@@ -39,7 +39,7 @@
         			<div class="form-group">
 						<label class="col-sm-4 control-label">First Name</label> 
 						<div class="col-sm-6">
-							<input required = 'true' type="text" class="form-control" ng-model="user.userData.firstname">
+							<input required = 'true' type="text" class="form-control" ng-model="userData.firstname">
    						</div>
   					</div>
   				</td>
@@ -48,7 +48,7 @@
         			<div class="form-group">
 						<label class="col-sm-4 control-label">Second Name </label> 
 						<div class="col-sm-6">
-							<input required = 'true'  type="text" class="form-control" ng-model="user.userData.secondname">
+							<input required = 'true'  type="text" class="form-control" ng-model="userData.secondname">
    						</div>
   					</div>
   				</td>
@@ -57,7 +57,7 @@
         			<div class="form-group">
 						<label class="col-sm-4 control-label">D.O.B</label> 
 						<div class="col-sm-6">
-							<input required = 'true' type="date" class="form-control" ng-model="user.userData.dob">
+							<input required = 'true' type="date" class="form-control" ng-model="userData.dob">
    						</div>
   					</div>
   				</td>
@@ -69,7 +69,7 @@
         			<div class="form-group">
 						<label class="col-sm-4 control-label">First Choice Position </label> 
 						<div class="col-sm-6">
-							<select required = 'true' ng-model="user.userData.position1">
+							<select required = 'true' ng-model="userData.position1">
 						        <option value="GK">GK</option>
 						        <option value="FB">FB</option>
 						        <option value="CB">CB</option>
@@ -85,7 +85,7 @@
         			<div class="form-group">
 						<label class="col-sm-4 control-label">Second Choice Position </label> 
 						<div class="col-sm-6">
-							<select ng-model="user.userData.position2">
+							<select ng-model="userData.position2">
 						        <option value="GK">GK</option>
 						        <option value="FB">FB</option>
 						        <option value="CB">CB</option>
@@ -105,7 +105,7 @@
         			<div class="form-group">
 						<label class="col-sm-4 control-label">email </label> 
 						<div class="col-sm-6">
-							<input required = 'true' type="text" class="form-control" ng-model="user.userData.email">
+							<input required = 'true' type="text" class="form-control" ng-model="userData.email">
    						</div>
   					</div>
   				</td>
@@ -115,7 +115,7 @@
         			<div class="form-group">
 						<label class="col-sm-4 control-label">Mobile</label> 
 						<div class="col-sm-6">
-							<input required = 'true' type="text" class="form-control" ng-model="user.userData.mob">
+							<input required = 'true' type="text" class="form-control" ng-model="userData.mob">
    						</div>
   					</div>
   				</td>
@@ -128,7 +128,7 @@
         			<div class="form-group">
 						<label class="col-sm-4 control-label">Address </label> 
 						<div class="col-sm-10">
-							<input required = 'true' type="text" class="form-control" ng-model="user.userData.address">
+							<input required = 'true' type="text" class="form-control" ng-model="userData.address">
    						</div>
   					</div>
   				</td>
@@ -142,8 +142,8 @@
 
 		       		<div class="form-group">
 						<div class="col-sm-offset-2 col-sm-6">
-							<button type="submit" class="btn btn-success btn-lg btn-block" ng-if="user.type == 'create'">Create User</button>
-							<button type="submit" class="btn btn-success btn-lg btn-block" ng-if="user.type == 'edit'">Update User</button>
+							<button type="submit" class="btn btn-success btn-lg btn-block" ng-if="type == 'create'">Create User</button>
+							<button type="submit" class="btn btn-success btn-lg btn-block" ng-if="type == 'edit'">Update User</button>
 				  		</div>
 				  	</div>
 
@@ -151,9 +151,9 @@
 
 			  	
 		  		<td>
-					<div class="row show-hide-message" ng-show="user.message">
+					<div class="row show-hide-message" ng-show="message">
 						<div class="col-sm-6 col-sm-offset-2">
-						<div class="alert alert-info"> {{ user.message }}</div>
+						<div class="alert alert-info"> {{ message }}</div>
 							</div>
 					</div>
 

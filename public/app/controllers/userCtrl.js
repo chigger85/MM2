@@ -65,6 +65,8 @@ angular.module('userCtrl', ['userService'])
       templateUrl: 'modalEditUser.html',
       controller: 'modalEditUser',
       scope: $scope,
+      size: 'lg',
+     
 
     	
     });
@@ -164,39 +166,7 @@ function($scope,User, $location, $timeout, $modalInstance, $route) {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-.controller("userCreateController", ["User", "$location", "$timeout", function(User, $location, $timeout) {
+.controller("userCreateController", ["$scope", "User", "$location", "$timeout", function($scope, User, $location, $timeout) {
 
 	
 	// variable to hide/show elements of view
@@ -243,40 +213,6 @@ function($scope,User, $location, $timeout, $modalInstance, $route) {
 		};
 
 }])
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 .controller("userEditController", ["User", "$routeParams","$location", "$timeout", function(User, $routeParams, $location, $timeout) {
