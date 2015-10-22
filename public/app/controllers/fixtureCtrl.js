@@ -94,7 +94,7 @@ angular.module('fixtureCtrl', ['fixtureService', 'userService', 'authService', '
 		 		$scope.attData = data;
 		 		console.log(data);
 		 		console.log($scope.user.id);
-		 		refresh();
+		 		$scope.refresh();
 		 		
 
 
@@ -124,7 +124,7 @@ angular.module('fixtureCtrl', ['fixtureService', 'userService', 'authService', '
 		 		$scope.attData = data;
 		 		console.log(data);
 		 		console.log($scope.user.id);
-		 		refresh();	
+		 		$scope.refresh();	
 		 	});
 
 
