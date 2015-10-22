@@ -9,13 +9,20 @@ angular.module('userCtrl', ['userService'])
     // set a processing variable to show loading things
 	$scope.processing = true;
   // grab all the users at page load
-	User.all().success(function(data) {
-      // when all the users come back, remove the processing variable
-		$scope.processing = false;
-      // bind the users that come back to $scope.users
-     $scope.users = data;
+	$scope.refresh = function() { 
 
-    });
+			User.all().success(function(data) {
+	      // when all the users come back, remove the processing variable
+			$scope.processing = false;
+	      // bind the users that come back to $scope.users
+	    	 $scope.users = data;
+
+    	});
+	};
+
+	$scope.refresh();
+
+
 
 
 
@@ -36,6 +43,19 @@ angular.module('userCtrl', ['userService'])
 		}); 
 
 	};
+
+
+	$scope.edit = function(id) {
+
+        console.log(id);
+        User.get(id).success(function(data) {
+            $scope.userData = data;
+
+            $scope.userData.dob = new Date($scope.userData.dob); 
+
+        });
+
+     };
 
 	$scope.open_submit = function () {
 
@@ -160,6 +180,94 @@ function($scope,User, $location, $timeout, $modalInstance, $route) {
 
 
 
+
+}])
+
+.controller("modalEditUser", ["$scope","User", "$location", "$timeout", "$modalInstance", "$route",
+function($scope, User, $location, $timeout, $modalInstance, $route) {
+
+		// var vm = this;
+	$scope.message = "User updated";
+	
+
+    $scope.ok = function () { 
+      $modalInstance.close($scope.message);  
+
+    };
+
+   $scope.cancel = function () {
+      $modalInstance.dismiss('cancel');
+
+    };
+
+
+
+    $scope.submit = function() {
+
+        
+        User.update($scope.userData._id, $scope.userData).success(function(data) {
+
+        	$scope.processing = false;
+
+				// clear the form
+
+			$scope.userData = {};
+
+			$scope.message = data.message; 
+			console.log(data.message);
+			$route.reload();
+
+        });
+    
+
+    };
+
+    $scope.deselect = function() {
+
+        $scope.userData = "";
+    }
+
+
+
+}])
+
+.controller("modalDeleteUser", ["$scope","User","$modalInstance", "$route",
+function($scope,User,$modalInstance, $route) {
+
+	$scope.message = "User deleted";
+	
+
+    $scope.ok = function () { 
+      $modalInstance.close($scope.message);  
+
+    };
+
+   	$scope.cancel = function () {
+      $modalInstance.dismiss('cancel');
+    };
+
+
+
+       // function to delete a user
+	$scope.deleteUser = function() { 
+
+		$scope.processing = true;
+	  	// accepts the user id as a parameter
+		User.delete($scope.userData._id).success(function(data) {
+		// get all users to update the table
+		// you can also set up your api
+		// to return the list of users with the delete call 
+			User.all().success(function(data) { 
+
+				$scope.processing = false; 
+				$scope.fixtures = data;
+			});
+
+			$route.reload();
+	
+		}); 
+
+	};
 
 }])
 

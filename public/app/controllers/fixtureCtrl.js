@@ -11,7 +11,7 @@ angular.module('fixtureCtrl', ['fixtureService', 'userService', 'authService', '
 
 	// grab all the fixtures at page load
 
-	var refresh = function(){
+	$scope.refresh = function(){
 
 	    Fixture.all().success(function(data) {
       // when all the fixtures come back, remove the processing variable
@@ -23,7 +23,7 @@ angular.module('fixtureCtrl', ['fixtureService', 'userService', 'authService', '
    	 });
 	};
 
-	refresh();
+	$scope.refresh();
 	
 
 
@@ -259,7 +259,7 @@ function($scope, Fixture, $modalInstance, $route) {
 function($scope,Fixture, $modalInstance, $route) {
 
 	// var vm = this;
-	$scope.message = "Fixture created";
+	$scope.message = "Fixture updated";
 	
 
     $scope.ok = function () { 
