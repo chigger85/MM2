@@ -1,6 +1,6 @@
 angular.module('fixtureService', ['userService'])
 
-.factory('Fixture', ["$http", function($http, User) {
+.factory('Fixture', ["$http", "User", function($http, User) {
 
 	// create fixture object
 

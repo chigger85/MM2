@@ -36,8 +36,6 @@ angular.module('fixtureCtrl', ['fixtureService', 'userService', 'authService', '
 
 
 
-
-
 	$scope.edit = function(id) {
 
         console.log(id);

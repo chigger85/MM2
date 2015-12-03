@@ -16,10 +16,11 @@ var FixtureSchema = new Schema({
 
 		homeGoals: Number,
 		awayGoals: Number,
-		goal: { type: Schema.Types.ObjectId, ref: 'Goal' },
+		goal: [{ type: Schema.Types.ObjectId, ref: 'Goal' }],
 		yellow: [{type: Schema.Types.ObjectId, ref: 'User' }],
 		red: [{type: Schema.Types.ObjectId, ref: 'User' }],
-		motm: [{type: Schema.Types.ObjectId, ref: 'User' }],
+		motm: {type: Schema.Types.ObjectId, ref: 'User' },
+		dotd: {type: Schema.Types.ObjectId, ref: 'User' },
 		starter: [{type: Schema.Types.ObjectId, ref: 'User' }],
 		subs: [{type: Schema.Types.ObjectId, ref: 'User' }],
 
