@@ -597,20 +597,27 @@ angular.module('fixtureCtrl', ['fixtureService', 'userService', 'authService', '
 
 	// grab all the fixtures at page load
 
-	$scope.fixture_status = function(id) {
-
-		Fixture.get(id).success(function(data) {
-
-			$scope.status = data.status;
-			console.log($scope.status);
 
 
+	$scope.getUpcoming = function() {
+
+		Fixture.upcoming().success(function(data) {
+
+			$scope.upcoming = data;
 
 
 		})
+	}
+
+	$scope.getResults = function() {
+
+		Fixture.results().success(function(data) {
+
+			$scope.results = data;
 
 
-	};
+		})
+	}
 
 
 
@@ -627,6 +634,8 @@ angular.module('fixtureCtrl', ['fixtureService', 'userService', 'authService', '
 	};
 
 	$scope.refresh();
+	$scope.getUpcoming();
+	$scope.getResults();
 	
 
 
@@ -667,6 +676,8 @@ angular.module('fixtureCtrl', ['fixtureService', 'userService', 'authService', '
 	}
 
 
+
+
 	// Fixture.all().success(function(data) {
 
 	// 	$scope.availables = data[0].available;
@@ -695,18 +706,12 @@ angular.module('fixtureCtrl', ['fixtureService', 'userService', 'authService', '
 		 		$scope.attData = data;
 		 		console.log(data);
 		 		console.log($scope.user.id);
-		 		$scope.refresh();
-		 		
-
+		 		$scope.getUpcoming();
 
 		 	});
 
-		 	
-
 		 
 		});
-
-		 
 
 
 	};
@@ -725,7 +730,7 @@ angular.module('fixtureCtrl', ['fixtureService', 'userService', 'authService', '
 		 		$scope.attData = data;
 		 		console.log(data);
 		 		console.log($scope.user.id);
-		 		$scope.refresh();	
+		 		$scope.getUpcoming();
 		 	});
 
 
@@ -1320,6 +1325,24 @@ angular.module('fixtureService', ['userService'])
 
 
 		return $http.get('/api/fixtures/' + fixture_id);
+
+
+
+	};
+
+	fixtureFactory.upcoming = function() {
+
+
+		return $http.get('/api/fixtures/upcoming');
+
+
+
+	};
+
+	fixtureFactory.results = function() {
+
+
+		return $http.get('/api/fixtures/results');
 
 
 

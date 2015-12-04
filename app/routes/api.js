@@ -265,9 +265,15 @@ module.exports = function(app, express) {
 	
 	apiRouter.route('/fixtures/upcoming')
 
+		
+
 		.get(function(req,res) {
 
-			Fixture.find( {date:{ "$gt": Date.now}},  function(err, upcoming) {
+			var date = new Date()
+			console.log(date)
+			
+
+			Fixture.find( {"date":{$gt: date}},  function(err, upcoming) {
 
 				if (err) return res.send(err);
 
@@ -282,7 +288,10 @@ module.exports = function(app, express) {
 
 		.get(function(req,res) {
 
-			Fixture.find( {date:{ "$lt": Date.now}}, function(err, results) {
+			var date = new Date()
+			console.log(date)
+
+			Fixture.find( {"date":{ $lt: date}}, function(err, results) {
 
 				if (err) return res.send(err);
 

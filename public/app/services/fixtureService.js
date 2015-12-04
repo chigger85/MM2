@@ -52,6 +52,24 @@ angular.module('fixtureService', ['userService'])
 
 	};
 
+	fixtureFactory.upcoming = function() {
+
+
+		return $http.get('/api/fixtures/upcoming');
+
+
+
+	};
+
+	fixtureFactory.results = function() {
+
+
+		return $http.get('/api/fixtures/results');
+
+
+
+	};
+
 
 
 	// return our entire fixtureFactory object

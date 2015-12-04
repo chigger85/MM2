@@ -5,7 +5,7 @@ var Schema       = mongoose.Schema;
 
 var FixtureSchema = new Schema({
 
-	opposition: {type: Schema.Types.ObjectId, ref: 'Team' },
+	opposition: String,
 	venue: String,
 	date: {type: Date, default: Date.now, index: { unique: true }},
 	home: {type: Boolean}, 
@@ -36,19 +36,6 @@ var FixtureSchema = new Schema({
 });
 
 
-FixtureSchema.methods.findUpcoming = function(cb) {
-
-	return this.find( {"date":{ "$gt": Date.now}}, cb
-
-	);
-};
-
-FixtureSchema.methods.findResults = function(cb) {
-
-	return this.find({"date":{ "$lt": Date.now}}, cb
-
-	);
-};
 
 
 
