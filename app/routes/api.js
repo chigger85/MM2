@@ -32,6 +32,7 @@ module.exports = function(app, express) {
 			user.address = req.body.address;
 			user.email = req.body.email;
 			user.mob = req.body.mob;  
+			user.team= req.body.team;
 			user.userType = req.body.userType;
 
 			user.save(function(err) {
@@ -214,6 +215,7 @@ module.exports = function(app, express) {
 				if (req.body.position2) user.position2 = req.body.position2;
 				if (req.body.address) user.address = req.body.address;
 				if (req.body.email) user.email = req.body.email;
+				if (req.body.team) user.team = req.body.team;  
 				if (req.body.mob) user.mob = req.body.mob;  
 				if (req.body.userType) user.userType = req.body.userType;  
 
@@ -260,7 +262,38 @@ module.exports = function(app, express) {
 
 
 // -------------------------- fixture api calls -------------------------
+	
+	apiRouter.route('/fixtures/upcoming')
 
+		.get(function(req,res) {
+
+			Fixture.find( {date:{ "$gt": Date.now}},  function(err, upcoming) {
+
+				if (err) return res.send(err);
+
+				res.json(upcoming);
+
+
+
+			});
+		});
+
+	apiRouter.route('/fixtures/results')
+
+		.get(function(req,res) {
+
+			Fixture.find( {date:{ "$lt": Date.now}}, function(err, results) {
+
+				if (err) return res.send(err);
+
+				console.log(results);
+
+				res.json(results);
+
+
+
+			});
+		});
 
 
 	apiRouter.route('/fixtures')
@@ -270,6 +303,8 @@ module.exports = function(app, express) {
 		.get(function(req, res) {
 			Fixture.find(function(err, fixtures) {
 				if (err) return res.send(err);
+
+				console.log(fixtures);
 
 				// return the users
 				res.json(fixtures);
@@ -437,6 +472,8 @@ module.exports = function(app, express) {
 			});
 		});
 
+
+	
 
 
 

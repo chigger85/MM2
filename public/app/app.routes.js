@@ -64,7 +64,15 @@ angular.module('app.routes', ['ngRoute'])
 	  templateUrl: 'app/views/pages/users/fixture.html',
 	  controller: 'fixtureEditController',
 	  controllerAs: 'fixture'
+	})
+
+				//page to editfixtures
+	.when('/afc_match_centre', {
+	  templateUrl: 'app/views/pages/users/league.html',
+	  controller: 'fixtureEditController',
+	  controllerAs: 'fixture'
 	});
+
 
 
 

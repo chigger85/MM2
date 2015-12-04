@@ -5,7 +5,7 @@ var Schema       = mongoose.Schema;
 
 var FixtureSchema = new Schema({
 
-	opposition: String,
+	opposition: {type: Schema.Types.ObjectId, ref: 'Team' },
 	venue: String,
 	date: {type: Date, default: Date.now, index: { unique: true }},
 	home: {type: Boolean}, 
@@ -34,6 +34,22 @@ var FixtureSchema = new Schema({
 	kit: {type: Schema.Types.ObjectId, ref: 'User' },
 
 });
+
+
+FixtureSchema.methods.findUpcoming = function(cb) {
+
+	return this.find( {"date":{ "$gt": Date.now}}, cb
+
+	);
+};
+
+FixtureSchema.methods.findResults = function(cb) {
+
+	return this.find({"date":{ "$lt": Date.now}}, cb
+
+	);
+};
+
 
 
 module.exports = mongoose.model('Fixture', FixtureSchema);

@@ -85,7 +85,15 @@ angular.module('app.routes', ['ngRoute'])
 	  templateUrl: 'app/views/pages/users/fixture.html',
 	  controller: 'fixtureEditController',
 	  controllerAs: 'fixture'
+	})
+
+				//page to editfixtures
+	.when('/afc_match_centre', {
+	  templateUrl: 'app/views/pages/users/league.html',
+	  controller: 'fixtureEditController',
+	  controllerAs: 'fixture'
 	});
+
 
 
 
@@ -589,6 +597,23 @@ angular.module('fixtureCtrl', ['fixtureService', 'userService', 'authService', '
 
 	// grab all the fixtures at page load
 
+	$scope.fixture_status = function(id) {
+
+		Fixture.get(id).success(function(data) {
+
+			$scope.status = data.status;
+			console.log($scope.status);
+
+
+
+
+		})
+
+
+	};
+
+
+
 	$scope.refresh = function(){
 
 	    Fixture.all().success(function(data) {
@@ -707,9 +732,6 @@ angular.module('fixtureCtrl', ['fixtureService', 'userService', 'authService', '
 
 
 		 });
-
-		 
-
 
 	};
 
@@ -1302,6 +1324,7 @@ angular.module('fixtureService', ['userService'])
 
 
 	};
+
 
 
 	// return our entire fixtureFactory object

@@ -11,6 +11,23 @@ angular.module('fixtureCtrl', ['fixtureService', 'userService', 'authService', '
 
 	// grab all the fixtures at page load
 
+	$scope.fixture_status = function(id) {
+
+		Fixture.get(id).success(function(data) {
+
+			$scope.status = data.status;
+			console.log($scope.status);
+
+
+
+
+		})
+
+
+	};
+
+
+
 	$scope.refresh = function(){
 
 	    Fixture.all().success(function(data) {
@@ -129,9 +146,6 @@ angular.module('fixtureCtrl', ['fixtureService', 'userService', 'authService', '
 
 
 		 });
-
-		 
-
 
 	};
 

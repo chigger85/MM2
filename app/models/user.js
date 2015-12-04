@@ -14,6 +14,7 @@ var UserSchema   = new Schema({
 	address: String,
 	email: String,
 	mob: String,
+	team: {type: Schema.Types.ObjectId, ref: 'Team' },
 	userType: String
 });
 

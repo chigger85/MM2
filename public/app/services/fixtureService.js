@@ -53,6 +53,7 @@ angular.module('fixtureService', ['userService'])
 	};
 
 
+
 	// return our entire fixtureFactory object
 	return fixtureFactory;
 
